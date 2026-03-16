@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bank Business Calculator | SabPaisa</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #002E8B;
+    --blue: #006CED;
+    --blue-sky: #0B8BFF;
+    --orange: #FF8800;
+    --orange-soft: #FFAC61;
+    --white: #FFFFFF;
+    --bg: #F4F7FC;
+    --gray-50: #F9FAFB;
+    --gray-100: #F2F4F7;
+    --gray-200: #E4E7EC;
+    --gray-300: #D0D5DD;
+    --gray-400: #98A2B3;
+    --gray-500: #667085;
+    --gray-600: #475467;
+    --gray-700: #344054;
+    --gray-800: #1D2939;
+    --gray-900: #101828;
+    --success: #10B981;
+    --success-light: #D1FAE5;
+    --error: #EF4444;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --shadow-sm: 0 1px 3px rgba(0,46,139,0.06), 0 1px 2px rgba(0,46,139,0.04);
+    --shadow-md: 0 4px 12px rgba(0,46,139,0.08), 0 2px 4px rgba(0,46,139,0.04);
+    --shadow-lg: 0 10px 30px rgba(0,46,139,0.1), 0 4px 8px rgba(0,46,139,0.06);
+    --shadow-kpi: 0 4px 20px rgba(0,46,139,0.12);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--gray-700);
+    line-height: 1.5;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, var(--navy) 0%, #001A52 100%);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,46,139,0.3);
+  }
+
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .logo-area { display: flex; align-items: center; gap: 12px; }
+
+  .logo-area img.header-logo {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .header-badge {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+    color: var(--white); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500;
+    backdrop-filter: blur(4px);
+  }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #003DB8 50%, var(--blue) 100%);
+    padding: 48px 24px 56px; text-align: center; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; top: -50%; right: -20%; width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(255,136,0,0.15) 0%, transparent 70%); border-radius: 50%;
+  }
+  .hero::after {
+    content: ''; position: absolute; bottom: -30%; left: -10%; width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(11,139,255,0.2) 0%, transparent 70%); border-radius: 50%;
+  }
+  .hero h1 { color: var(--white); font-size: 36px; font-weight: 700; margin-bottom: 12px; position: relative; z-index: 1; letter-spacing: -0.5px; }
+  .hero h1 span { color: var(--orange); }
+  .hero p { color: rgba(255,255,255,0.8); font-size: 17px; max-width: 600px; margin: 0 auto; position: relative; z-index: 1; line-height: 1.6; }
+
+  /* ===== BANK SELECTION PAGE ===== */
+  .bank-selection-page {
+    max-width: 700px; margin: 0 auto; padding: 40px 24px 64px;
+  }
+  .bank-selection-page .page-title {
+    font-size: 24px; font-weight: 700; color: var(--gray-900); text-align: center; margin-bottom: 8px;
+  }
+  .bank-selection-page .page-subtitle {
+    font-size: 15px; color: var(--gray-500); text-align: center; margin-bottom: 36px;
+  }
+
+  .bank-select-card {
+    background: var(--white); border-radius: var(--radius-xl); padding: 36px;
+    box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200); margin-bottom: 32px;
+  }
+
+  .bank-select-card .field-group {
+    margin-bottom: 28px;
+  }
+  .bank-select-card .field-group:last-child { margin-bottom: 0; }
+
+  .bank-select-card label {
+    font-size: 15px; font-weight: 600; color: var(--gray-700); display: block; margin-bottom: 8px;
+  }
+
+  .bank-select-card select,
+  .bank-select-card input[type="text"] {
+    width: 100%; padding: 12px 16px; border: 1.5px solid var(--gray-200); border-radius: var(--radius);
+    font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 500; color: var(--gray-800);
+    background: var(--gray-50); transition: all 0.2s; outline: none; appearance: none;
+    -webkit-appearance: none;
+  }
+
+  .bank-select-card select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2398A2B3' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 40px;
+    cursor: pointer;
+  }
+
+  .bank-select-card select:focus,
+  .bank-select-card input[type="text"]:focus {
+    border-color: var(--blue-sky); background-color: var(--white);
+    box-shadow: 0 0 0 3px rgba(11,139,255,0.12);
+  }
+
+  .bank-select-card .hint-text {
+    font-size: 13px; color: var(--gray-400); margin-top: 6px;
+  }
+
+  /* Logo preview after selection */
+  .bank-logo-preview {
+    display: none;
+    align-items: center;
+    gap: 16px;
+    margin-top: 16px;
+    padding: 16px 20px;
+    background: linear-gradient(135deg, rgba(0,46,139,0.03), rgba(11,139,255,0.04));
+    border-radius: var(--radius-lg);
+    border: 1px solid rgba(0,46,139,0.08);
+  }
+
+  .bank-logo-preview.visible { display: flex; }
+
+  .bank-logo-preview img {
+    width: 72px; height: 54px; object-fit: contain; border-radius: 6px;
+  }
+
+  .bank-logo-preview .preview-name {
+    font-size: 18px; font-weight: 700; color: var(--gray-900);
+  }
+
+  .proceed-bar { display: flex; justify-content: center; }
+
+  .btn-proceed {
+    background: linear-gradient(135deg, var(--navy), #003DB8); color: var(--white); border: none;
+    padding: 16px 48px; border-radius: var(--radius-lg); font-family: 'Inter', sans-serif;
+    font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 10px; box-shadow: var(--shadow-md);
+  }
+  .btn-proceed:hover:not(:disabled) {
+    background: linear-gradient(135deg, #003DB8, var(--blue)); transform: translateY(-2px); box-shadow: var(--shadow-lg);
+  }
+  .btn-proceed:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+  .validation-error {
+    text-align: center; color: var(--error); font-size: 14px; font-weight: 500;
+    margin-bottom: 16px; display: none;
+  }
+
+  /* ===== BANK BANNER ===== */
+  .bank-banner {
+    background: var(--white); border-radius: var(--radius-xl); padding: 20px 28px;
+    margin-bottom: 24px; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200);
+    display: flex; align-items: center; gap: 20px;
+  }
+  .bank-banner .banner-logo {
+    width: 72px; height: 54px; object-fit: contain; border-radius: 6px; flex-shrink: 0;
+  }
+  .bank-banner .banner-info { flex: 1; }
+  .bank-banner .banner-bank-name {
+    font-size: 20px; font-weight: 700; color: var(--gray-900); letter-spacing: -0.3px;
+  }
+  .bank-banner .banner-zone {
+    font-size: 14px; color: var(--gray-500); font-weight: 500; margin-top: 2px;
+  }
+  .bank-banner .banner-badge {
+    background: linear-gradient(135deg, rgba(0,46,139,0.06), rgba(11,139,255,0.08));
+    color: var(--navy); padding: 6px 16px; border-radius: 20px; font-size: 13px; font-weight: 600;
+    border: 1px solid rgba(0,46,139,0.1);
+  }
+
+  /* Tab Navigation */
+  .tab-nav {
+    max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; gap: 0; margin-top: -1px;
+  }
+  .tab-btn {
+    flex: 1; max-width: 240px; padding: 16px 32px; font-family: 'Inter', sans-serif;
+    font-size: 15px; font-weight: 600; border: none; cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0; position: relative; top: 1px;
+  }
+  .tab-btn.active {
+    background: var(--bg); color: var(--navy); box-shadow: 0 -2px 8px rgba(0,46,139,0.08);
+    border: 1px solid var(--gray-200); border-bottom: 1px solid var(--bg);
+  }
+  .tab-btn:not(.active) { background: var(--gray-200); color: var(--gray-500); }
+  .tab-btn:not(.active):not(:disabled):hover { background: var(--gray-300); color: var(--gray-700); }
+  .tab-btn:disabled { cursor: not-allowed; opacity: 0.5; }
+  .tab-btn .tab-icon { font-size: 18px; }
+
+  /* Main Container */
+  .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px 64px; }
+
+  /* Page/Tab Content */
+  .page-content { display: none; }
+  .page-content.active { display: block; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* Step Sections */
+  .step-section {
+    background: var(--white); border-radius: var(--radius-xl); padding: 32px;
+    margin-bottom: 24px; box-shadow: var(--shadow-sm); border: 1px solid var(--gray-200);
+    transition: box-shadow 0.2s;
+  }
+  .step-section:hover { box-shadow: var(--shadow-md); }
+
+  .step-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+
+  .step-number {
+    width: 36px; height: 36px; background: linear-gradient(135deg, var(--navy), var(--blue));
+    color: var(--white); border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 15px; flex-shrink: 0;
+  }
+  .step-title { font-size: 20px; font-weight: 600; color: var(--gray-900); letter-spacing: -0.3px; }
+  .step-subtitle { font-size: 14px; color: var(--gray-500); margin-top: 2px; }
+
+  /* Form Elements */
+  .input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+  .input-group { display: flex; flex-direction: column; gap: 6px; }
+  .input-group label { font-size: 14px; font-weight: 500; color: var(--gray-600); }
+  .input-group label .hint { font-weight: 400; color: var(--gray-400); font-size: 12px; }
+
+  .input-wrapper { position: relative; display: flex; align-items: center; }
+  .input-wrapper input {
+    width: 100%; padding: 10px 14px; border: 1.5px solid var(--gray-200); border-radius: var(--radius);
+    font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 500; color: var(--gray-800);
+    background: var(--gray-50); transition: all 0.2s; outline: none;
+  }
+  .input-wrapper input:focus { border-color: var(--blue-sky); background: var(--white); box-shadow: 0 0 0 3px rgba(11,139,255,0.12); }
+  .input-wrapper .suffix { position: absolute; right: 12px; color: var(--gray-400); font-size: 14px; font-weight: 500; pointer-events: none; }
+  .input-wrapper .prefix { position: absolute; left: 12px; color: var(--gray-400); font-size: 14px; font-weight: 500; pointer-events: none; }
+  .input-wrapper input.has-suffix { padding-right: 40px; }
+  .input-wrapper input.has-prefix { padding-left: 28px; }
+
+  .computed-value {
+    margin-top: 8px; padding: 10px 14px;
+    background: linear-gradient(135deg, rgba(0,46,139,0.04), rgba(11,139,255,0.06));
+    border-radius: var(--radius); border: 1px solid rgba(0,46,139,0.08);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .computed-value .label { font-size: 13px; color: var(--gray-500); font-weight: 500; }
+  .computed-value .value { font-family: 'JetBrains Mono', monospace; font-size: 16px; font-weight: 600; color: var(--navy); }
+
+  /* Segment Cards */
+  .segment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .segment-card { padding: 20px; border-radius: var(--radius-lg); border: 1.5px solid; position: relative; overflow: hidden; }
+  .segment-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .segment-card.large { border-color: rgba(0,46,139,0.15); background: linear-gradient(180deg, rgba(0,46,139,0.03) 0%, var(--white) 100%); }
+  .segment-card.large::before { background: var(--navy); }
+  .segment-card.mid { border-color: rgba(11,139,255,0.2); background: linear-gradient(180deg, rgba(11,139,255,0.03) 0%, var(--white) 100%); }
+  .segment-card.mid::before { background: var(--blue-sky); }
+  .segment-card.small { border-color: rgba(255,136,0,0.2); background: linear-gradient(180deg, rgba(255,136,0,0.03) 0%, var(--white) 100%); }
+  .segment-card.small::before { background: var(--orange); }
+  .segment-card .seg-label { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+  .segment-card.large .seg-label { color: var(--navy); }
+  .segment-card.mid .seg-label { color: var(--blue-sky); }
+  .segment-card.small .seg-label { color: var(--orange); }
+  .segment-card .seg-row { display: flex; justify-content: space-between; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--gray-100); }
+  .segment-card .seg-row:last-child { border-bottom: none; }
+  .segment-card .seg-row .seg-key { font-size: 13px; color: var(--gray-500); }
+  .segment-card .seg-row .seg-val { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 600; color: var(--gray-800); }
+
+  /* KPI Dashboard */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+  .kpi-card {
+    background: var(--white); border-radius: var(--radius-lg); padding: 24px;
+    border: 1px solid var(--gray-200); box-shadow: var(--shadow-kpi); text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .kpi-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+  .kpi-card .kpi-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 20px; }
+  .kpi-card .kpi-value { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; color: var(--gray-900); letter-spacing: -0.5px; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .kpi-card .kpi-label { font-size: 13px; font-weight: 500; color: var(--gray-500); }
+  .kpi-card.navy .kpi-icon { background: rgba(0,46,139,0.08); color: var(--navy); }
+  .kpi-card.blue .kpi-icon { background: rgba(11,139,255,0.08); color: var(--blue-sky); }
+  .kpi-card.orange .kpi-icon { background: rgba(255,136,0,0.08); color: var(--orange); }
+  .kpi-card.green .kpi-icon { background: rgba(16,185,129,0.08); color: var(--success); }
+
+  /* GMV Table */
+  .gmv-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 16px; }
+  .gmv-table thead th { background: var(--gray-50); padding: 12px 16px; text-align: left; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--gray-500); border-bottom: 2px solid var(--gray-200); }
+  .gmv-table thead th:first-child { border-radius: var(--radius) 0 0 0; }
+  .gmv-table thead th:last-child { border-radius: 0 var(--radius) 0 0; }
+  .gmv-table tbody td { padding: 14px 16px; border-bottom: 1px solid var(--gray-100); font-size: 14px; }
+  .gmv-table tbody td:not(:first-child) { font-family: 'JetBrains Mono', monospace; font-weight: 500; text-align: right; }
+  .gmv-table thead th:not(:first-child) { text-align: right; }
+  .gmv-table tbody tr:last-child td { border-bottom: none; font-weight: 700; color: var(--navy); background: rgba(0,46,139,0.03); }
+  .gmv-table tbody tr.seg-large td:first-child { border-left: 3px solid var(--navy); }
+  .gmv-table tbody tr.seg-mid td:first-child { border-left: 3px solid var(--blue-sky); }
+  .gmv-table tbody tr.seg-small td:first-child { border-left: 3px solid var(--orange); }
+  .gmv-table tbody tr:last-child td:first-child { border-left: 3px solid var(--success); border-radius: 0 0 0 var(--radius); }
+  .gmv-table tbody tr:last-child td:last-child { border-radius: 0 0 var(--radius) 0; }
+
+  /* Progress Bar */
+  .segment-bar { display: flex; height: 12px; border-radius: 6px; overflow: hidden; margin: 16px 0 8px; background: var(--gray-100); }
+  .segment-bar .bar-large { background: linear-gradient(90deg, var(--navy), #003DB8); transition: width 0.5s ease; }
+  .segment-bar .bar-mid { background: linear-gradient(90deg, var(--blue), var(--blue-sky)); transition: width 0.5s ease; }
+  .segment-bar .bar-small { background: linear-gradient(90deg, var(--orange), var(--orange-soft)); transition: width 0.5s ease; }
+  .bar-legend { display: flex; gap: 24px; flex-wrap: wrap; }
+  .bar-legend-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--gray-600); }
+  .bar-legend-item .dot { width: 10px; height: 10px; border-radius: 3px; }
+  .bar-legend-item .dot.navy { background: var(--navy); }
+  .bar-legend-item .dot.blue { background: var(--blue-sky); }
+  .bar-legend-item .dot.orange { background: var(--orange); }
+
+  /* Buttons */
+  .btn-primary { background: linear-gradient(135deg, var(--navy), #003DB8); color: var(--white); border: none; padding: 14px 32px; border-radius: var(--radius); font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-primary:hover { background: linear-gradient(135deg, #003DB8, var(--blue)); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+  .btn-secondary { background: var(--white); color: var(--navy); border: 1.5px solid var(--navy); padding: 14px 32px; border-radius: var(--radius); font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-secondary:hover { background: rgba(0,46,139,0.04); transform: translateY(-1px); }
+  .btn-orange { background: linear-gradient(135deg, var(--orange), #E67A00); color: var(--white); border: none; padding: 14px 32px; border-radius: var(--radius); font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+  .btn-orange:hover { background: linear-gradient(135deg, #E67A00, #CC6D00); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,136,0,0.3); }
+
+  .btn-calculate {
+    background: linear-gradient(135deg, var(--orange), #E67A00); color: var(--white); border: none;
+    padding: 18px 48px; border-radius: var(--radius-lg); font-family: 'Inter', sans-serif;
+    font-size: 17px; font-weight: 700; cursor: pointer; transition: all 0.2s;
+    display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 4px 16px rgba(255,136,0,0.3);
+  }
+  .btn-calculate:hover { background: linear-gradient(135deg, #E67A00, #CC6D00); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(255,136,0,0.4); }
+
+  .calculate-bar { display: flex; justify-content: center; margin-top: 8px; }
+  .actions-bar { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+
+  /* Footer */
+  .footer { background: var(--gray-900); color: var(--gray-400); text-align: center; padding: 24px; font-size: 13px; }
+  .footer a { color: var(--orange); text-decoration: none; }
+
+  /* Preset bar */
+  .preset-bar { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+  .preset-btn { background: var(--gray-50); border: 1px solid var(--gray-200); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; color: var(--gray-600); cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+  .preset-btn:hover { background: var(--blue-sky); color: var(--white); border-color: var(--blue-sky); }
+  .preset-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+
+  .divider { height: 1px; background: var(--gray-200); margin: 24px 0; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 26px; }
+    .hero p { font-size: 15px; }
+    .segment-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .input-grid { grid-template-columns: 1fr; }
+    .step-section { padding: 24px 20px; }
+    .container { padding: 20px 16px 48px; }
+    .header-badge { display: none; }
+    .kpi-card .kpi-value { font-size: 18px; }
+    .tab-btn { padding: 12px 16px; font-size: 14px; }
+    .bank-banner { flex-direction: column; text-align: center; }
+  }
+
+  @media (max-width: 480px) {
+    .kpi-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Print */
+  @media print {
+    .header { position: relative; }
+    body { background: white; }
+    .step-section { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+    .kpi-card { box-shadow: none; border: 1px solid #ddd; }
+    .btn-primary, .btn-secondary, .btn-orange, .btn-calculate, .preset-bar, .actions-bar, .tab-nav, .calculate-bar { display: none !important; }
+    .no-print { display: none !important; }
+    .tab-content { display: block !important; }
+    .page-content { display: block !important; }
+    .bank-selection-page { display: none !important; }
+  }
+
+  @keyframes fadeInUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+  .step-section { animation: fadeInUp 0.4s ease forwards; }
+  .step-section:nth-child(2) { animation-delay: 0.05s; }
+  .step-section:nth-child(3) { animation-delay: 0.1s; }
+  .step-section:nth-child(4) { animation-delay: 0.15s; }
+  .step-section:nth-child(5) { animation-delay: 0.2s; }
+  .step-section:nth-child(6) { animation-delay: 0.25s; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo-area">
+      <img class="header-logo" src="assets/logos/sabpaisa-white.png" alt="SabPaisa">
+    </div>
+    <div class="header-badge">Bank Business Calculator</div>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <h1>Bank Business <span>Calculator</span></h1>
+  <p>Estimate potential business volumes and revenue generation from banking partners. Quantify your GTM impact with precision.</p>
+</section>
+
+<!-- ========== PAGE 1: BANK SELECTION ========== -->
+<div class="page-content active" id="bankSelectionPage">
+  <div class="bank-selection-page">
+    <div class="page-title">Select Bank Partner</div>
+    <div class="page-subtitle">Choose the bank and enter the zonal/regional office details</div>
+
+    <div class="bank-select-card">
+      <!-- Bank Dropdown -->
+      <div class="field-group">
+        <label>Bank Partner Name</label>
+        <select id="bankDropdown" onchange="onBankSelect()">
+          <option value="">-- Select Bank --</option>
+          <option value="boi">Bank of India</option>
+          <option value="indianbank">Indian Bank</option>
+          <option value="unionbank">Union Bank of India</option>
+          <option value="canara">Canara Bank</option>
+          <option value="centralbank">Central Bank of India</option>
+          <option value="iob">Indian Overseas Bank</option>
+          <option value="bom">Bank of Maharashtra</option>
+        </select>
+
+        <!-- Logo preview -->
+        <div class="bank-logo-preview" id="bankLogoPreview">
+          <img id="previewLogo" src="" alt="">
+          <div class="preview-name" id="previewName"></div>
+        </div>
+      </div>
+
+      <!-- Zonal Office -->
+      <div class="field-group">
+        <label>Zonal / Regional Office Name</label>
+        <input type="text" id="zonalOffice" placeholder="e.g. Mumbai, Delhi, Chennai..." oninput="validateBankSelection()">
+        <div class="hint-text">Enter the zonal or regional office name for this bank partner</div>
+      </div>
+    </div>
+
+    <div class="validation-error" id="bankError">Please select a bank and enter the zonal/regional office name</div>
+
+    <div class="proceed-bar">
+      <button class="btn-proceed" id="btnProceed" onclick="proceedToInput()" disabled>
+        Proceed to Calculator &#8594;
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PAGE 2: CALCULATOR ========== -->
+<div class="page-content" id="calculatorPage">
+
+  <!-- Tab Navigation -->
+  <div class="tab-nav no-print">
+    <button class="tab-btn active" id="tabInput" onclick="switchTab('input')">
+      <span class="tab-icon">&#9998;</span> Input
+    </button>
+    <button class="tab-btn" id="tabCalculated" onclick="switchTab('calculated')" disabled>
+      <span class="tab-icon">&#128202;</span> Calculated
+    </button>
+  </div>
+
+  <main class="container">
+
+    <!-- ========== INPUT TAB ========== -->
+    <div class="tab-content active" id="inputTab">
+
+      <!-- Selected Bank Mini Banner -->
+      <div class="bank-banner no-print" id="inputBankBanner" style="margin-bottom:24px;">
+        <img class="banner-logo" id="inputBannerLogo" src="" alt="">
+        <div class="banner-info">
+          <div class="banner-bank-name" id="inputBannerName">-</div>
+          <div class="banner-zone" id="inputBannerZone">-</div>
+        </div>
+        <button class="btn-secondary" onclick="goBackToBankSelection()" style="padding:8px 16px;font-size:13px;">&#9998; Change Bank</button>
+      </div>
+
+      <!-- Presets -->
+      <div class="preset-bar no-print">
+        <span style="font-size:13px;color:var(--gray-500);padding:6px 0;font-weight:500;">Quick Presets:</span>
+        <button class="preset-btn active" onclick="loadPreset('default')">Default (255 Branches)</button>
+        <button class="preset-btn" onclick="loadPreset('small')">Small Bank (50)</button>
+        <button class="preset-btn" onclick="loadPreset('large')">Large Bank (1000)</button>
+        <button class="preset-btn" onclick="loadPreset('reset')">Reset All</button>
+      </div>
+
+      <!-- STEP 1 -->
+      <section class="step-section">
+        <div class="step-header">
+          <div class="step-number">1</div>
+          <div><div class="step-title">Branch Assumptions</div><div class="step-subtitle">Define the bank's total branches and key branch percentage</div></div>
+        </div>
+        <div class="input-grid">
+          <div class="input-group">
+            <label>Total Branches</label>
+            <div class="input-wrapper"><input type="number" id="totalBranches" value="255" min="1"></div>
+          </div>
+          <div class="input-group">
+            <label>Key Branches <span class="hint">(% of total)</span></label>
+            <div class="input-wrapper"><input type="number" id="keyBranchPct" value="15" min="0" max="100" class="has-suffix"><span class="suffix">%</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 2 -->
+      <section class="step-section">
+        <div class="step-header">
+          <div class="step-number">2</div>
+          <div><div class="step-title">Annual Lead Generation</div><div class="step-subtitle">Estimate leads from key and remaining branches</div></div>
+        </div>
+        <div class="input-grid">
+          <div class="input-group">
+            <label>Leads per Key Branch / Month</label>
+            <div class="input-wrapper"><input type="number" id="leadsPerBranch" value="1" min="0"></div>
+          </div>
+          <div class="input-group">
+            <label>Leads from Remaining Branches <span class="hint">(% of key branch leads)</span></label>
+            <div class="input-wrapper"><input type="number" id="remainingLeadsPct" value="0" min="0" max="100" class="has-suffix"><span class="suffix">%</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP 3 -->
+      <section class="step-section">
+        <div class="step-header">
+          <div class="step-number">3</div>
+          <div><div class="step-title">Lead Distribution by Segment</div><div class="step-subtitle">Allocate leads across Large, Mid, and Small accounts</div></div>
+        </div>
+        <div class="input-grid" style="grid-template-columns:repeat(3,1fr);">
+          <div class="input-group"><label>Large Accounts</label><div class="input-wrapper"><input type="number" id="largePct" value="5" min="0" max="100" class="has-suffix"><span class="suffix">%</span></div></div>
+          <div class="input-group"><label>Mid Accounts</label><div class="input-wrapper"><input type="number" id="midPct" value="20" min="0" max="100" class="has-suffix"><span class="suffix">%</span></div></div>
+          <div class="input-group"><label>Small Accounts</label><div class="input-wrapper"><input type="number" id="smallPct" value="75" min="0" max="100" class="has-suffix"><span class="suffix">%</span></div></div>
+        </div>
+        <div id="distWarning" style="display:none;margin-top:8px;padding:8px 12px;background:#FEF3C7;border:1px solid #FDE68A;border-radius:6px;font-size:13px;color:#92400E;">Distribution does not add up to 100%.</div>
+      </section>
+
+      <!-- STEP 4 -->
+      <section class="step-section">
+        <div class="step-header">
+          <div class="step-number">4</div>
+          <div><div class="step-title">Conversion Rates</div><div class="step-subtitle">Set expected lead-to-MoU conversion rates per segment</div></div>
+        </div>
+        <div class="input-grid" style="grid-template-columns:repeat(3,1fr);">
+          <div class="input-group"><label>Large Conversion</label><div class="input-wrapper"><input type="number" id="largeConvRate" value="50" min="0" max="100" class="has-suffix"><span class="suffix">%</span></div></div>
+          <div class="input-group"><label>Mid Conversion</label><div class="input-wrapper"><input type="number" id="midConvRate" value="60" min="0" max="100" class="has-suffix"><span class="suffix">%</span></div></div>
+          <div class="input-group"><label>Small Conversion</label><div class="input-wrapper"><input type="number" id="smallConvRate" value="70" min="0" max="100" class="has-suffix"><span class="suffix">%</span></div></div>
+        </div>
+      </section>
+
+      <!-- STEP 5 -->
+      <section class="step-section">
+        <div class="step-header">
+          <div class="step-number">5</div>
+          <div><div class="step-title">Gross Merchandise Value (GMV)</div><div class="step-subtitle">Set average GMV per converted account in each segment</div></div>
+        </div>
+        <div class="input-grid" style="grid-template-columns:repeat(3,1fr);">
+          <div class="input-group"><label>Large GMV per Account <span class="hint">(in Cr)</span></label><div class="input-wrapper"><span class="prefix">&#8377;</span><input type="number" id="largeGMV" value="50" min="0" class="has-prefix has-suffix"><span class="suffix">Cr</span></div></div>
+          <div class="input-group"><label>Mid GMV per Account <span class="hint">(in Cr)</span></label><div class="input-wrapper"><span class="prefix">&#8377;</span><input type="number" id="midGMV" value="10" min="0" class="has-prefix has-suffix"><span class="suffix">Cr</span></div></div>
+          <div class="input-group"><label>Small GMV per Account <span class="hint">(in Cr)</span></label><div class="input-wrapper"><span class="prefix">&#8377;</span><input type="number" id="smallGMV" value="0.5" min="0" step="0.1" class="has-prefix has-suffix"><span class="suffix">Cr</span></div></div>
+        </div>
+      </section>
+
+      <!-- STEP 6 -->
+      <section class="step-section">
+        <div class="step-header">
+          <div class="step-number">6</div>
+          <div><div class="step-title">NFNI Parameters</div><div class="step-subtitle">Non-Fund Net Income calculation based on transaction volume</div></div>
+        </div>
+        <div class="input-grid">
+          <div class="input-group"><label>Average Ticket Size <span class="hint">(in &#8377;)</span></label><div class="input-wrapper"><span class="prefix">&#8377;</span><input type="number" id="avgTicket" value="200" min="1" class="has-prefix"></div></div>
+          <div class="input-group"><label>Average NFNI per Transaction <span class="hint">(in &#8377;)</span></label><div class="input-wrapper"><span class="prefix">&#8377;</span><input type="number" id="avgNFNI" value="3" min="0" step="0.5" class="has-prefix"></div></div>
+        </div>
+      </section>
+
+      <div class="calculate-bar no-print">
+        <button class="btn-calculate" onclick="runCalculate()">&#9889; Calculate Results</button>
+      </div>
+    </div><!-- /inputTab -->
+
+    <!-- ========== CALCULATED TAB ========== -->
+    <div class="tab-content" id="calculatedTab">
+
+      <div style="margin-bottom:24px;" class="no-print">
+        <button class="btn-secondary" onclick="switchTab('input')">&#8592; Back to Inputs</button>
+      </div>
+
+      <!-- Bank Banner on Results -->
+      <div class="bank-banner" id="resultsBankBanner">
+        <img class="banner-logo" id="resultsBannerLogo" src="" alt="">
+        <div class="banner-info">
+          <div class="banner-bank-name" id="resultsBannerName">-</div>
+          <div class="banner-zone" id="resultsBannerZone">-</div>
+        </div>
+        <div class="banner-badge">Business Estimate</div>
+      </div>
+
+      <!-- KPI Dashboard -->
+      <section class="step-section" style="background:linear-gradient(135deg,rgba(0,46,139,0.02),rgba(11,139,255,0.03));border-color:rgba(0,46,139,0.12);">
+        <div class="step-header">
+          <div class="step-number" style="background:linear-gradient(135deg,var(--orange),#E67A00);">&#9733;</div>
+          <div><div class="step-title">Summary Dashboard</div><div class="step-subtitle">Key metrics at a glance</div></div>
+        </div>
+        <div class="kpi-grid">
+          <div class="kpi-card navy"><div class="kpi-icon">&#127970;</div><div class="kpi-value" id="kpiKeyBranches">-</div><div class="kpi-label">Key Branches</div></div>
+          <div class="kpi-card blue"><div class="kpi-icon">&#128200;</div><div class="kpi-value" id="kpiLeads">-</div><div class="kpi-label">Annual Leads</div></div>
+          <div class="kpi-card orange"><div class="kpi-icon">&#129309;</div><div class="kpi-value" id="kpiMoUs">-</div><div class="kpi-label">MoUs Signed</div></div>
+          <div class="kpi-card green"><div class="kpi-icon">&#128176;</div><div class="kpi-value" id="kpiGMV">-</div><div class="kpi-label">Total GMV</div></div>
+          <div class="kpi-card navy"><div class="kpi-icon">&#128178;</div><div class="kpi-value" id="kpiNFNI">-</div><div class="kpi-label">NFNI Earned</div></div>
+          <div class="kpi-card blue"><div class="kpi-icon">&#127919;</div><div class="kpi-value" id="kpiConvRate">-</div><div class="kpi-label">Conversion Rate</div></div>
+          <div class="kpi-card orange"><div class="kpi-icon">&#128179;</div><div class="kpi-value" id="kpiRevBranch">-</div><div class="kpi-label">Revenue / Branch</div></div>
+          <div class="kpi-card green"><div class="kpi-icon">&#9889;</div><div class="kpi-value" id="kpiTxnVol">-</div><div class="kpi-label">Transactions</div></div>
+        </div>
+      </section>
+
+      <!-- GMV Breakdown -->
+      <section class="step-section">
+        <div class="step-header">
+          <div class="step-number" style="background:linear-gradient(135deg,var(--blue),var(--blue-sky));">&#8377;</div>
+          <div><div class="step-title">GMV Breakdown</div><div class="step-subtitle">Gross Merchandise Value by segment</div></div>
+        </div>
+        <table class="gmv-table">
+          <thead><tr><th>Segment</th><th>MoUs</th><th>GMV / Account</th><th>Total GMV</th></tr></thead>
+          <tbody>
+            <tr class="seg-large"><td>Large Accounts</td><td id="tblLargeMoU">-</td><td id="tblLargeGMVPer">-</td><td id="tblLargeGMVTotal">-</td></tr>
+            <tr class="seg-mid"><td>Mid Accounts</td><td id="tblMidMoU">-</td><td id="tblMidGMVPer">-</td><td id="tblMidGMVTotal">-</td></tr>
+            <tr class="seg-small"><td>Small Accounts</td><td id="tblSmallMoU">-</td><td id="tblSmallGMVPer">-</td><td id="tblSmallGMVTotal">-</td></tr>
+            <tr><td>Total GMV</td><td id="tblTotalMoU">-</td><td>-</td><td id="tblTotalGMV">-</td></tr>
+          </tbody>
+        </table>
+        <div class="segment-bar" id="gmvBar">
+          <div class="bar-large" style="width:0%"></div>
+          <div class="bar-mid" style="width:0%"></div>
+          <div class="bar-small" style="width:0%"></div>
+        </div>
+        <div class="bar-legend">
+          <div class="bar-legend-item"><span class="dot navy"></span> Large <span id="barLargePct" style="font-family:'JetBrains Mono';font-weight:600;">0%</span></div>
+          <div class="bar-legend-item"><span class="dot blue"></span> Mid <span id="barMidPct" style="font-family:'JetBrains Mono';font-weight:600;">0%</span></div>
+          <div class="bar-legend-item"><span class="dot orange"></span> Small <span id="barSmallPct" style="font-family:'JetBrains Mono';font-weight:600;">0%</span></div>
+        </div>
+      </section>
+
+      <!-- Segment Breakdown -->
+      <section class="step-section">
+        <div class="step-header">
+          <div class="step-number" style="background:linear-gradient(135deg,var(--success),#0D9668);">&#9638;</div>
+          <div><div class="step-title">Segment Breakdown</div><div class="step-subtitle">Detailed metrics per account segment</div></div>
+        </div>
+        <div class="segment-grid">
+          <div class="segment-card large"><div class="seg-label">Large Accounts</div><div class="seg-row"><span class="seg-key">Leads</span><span class="seg-val" id="sumLargeLeads">-</span></div><div class="seg-row"><span class="seg-key">Converted</span><span class="seg-val" id="sumLargeMoU">-</span></div><div class="seg-row"><span class="seg-key">GMV</span><span class="seg-val" id="sumLargeGMV">-</span></div></div>
+          <div class="segment-card mid"><div class="seg-label">Mid Accounts</div><div class="seg-row"><span class="seg-key">Leads</span><span class="seg-val" id="sumMidLeads">-</span></div><div class="seg-row"><span class="seg-key">Converted</span><span class="seg-val" id="sumMidMoU">-</span></div><div class="seg-row"><span class="seg-key">GMV</span><span class="seg-val" id="sumMidGMV">-</span></div></div>
+          <div class="segment-card small"><div class="seg-label">Small Accounts</div><div class="seg-row"><span class="seg-key">Leads</span><span class="seg-val" id="sumSmallLeads">-</span></div><div class="seg-row"><span class="seg-key">Converted</span><span class="seg-val" id="sumSmallMoU">-</span></div><div class="seg-row"><span class="seg-key">GMV</span><span class="seg-val" id="sumSmallGMV">-</span></div></div>
+        </div>
+      </section>
+
+      <!-- NFNI Results -->
+      <section class="step-section">
+        <div class="step-header">
+          <div class="step-number" style="background:linear-gradient(135deg,var(--navy),var(--blue));">&#8377;</div>
+          <div><div class="step-title">NFNI Results</div><div class="step-subtitle">Non-Fund Net Income from transaction volume</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div class="computed-value"><span class="label">Total Transactions</span><span class="value" id="totalTxn">-</span></div>
+          <div class="computed-value"><span class="label">Total NFNI Earned</span><span class="value" id="totalNFNI">-</span></div>
+        </div>
+      </section>
+
+      <div class="actions-bar no-print">
+        <button class="btn-primary" onclick="downloadPDF()">&#128196; Download PDF Summary</button>
+        <button class="btn-orange" onclick="shareCalc()">&#128279; Copy Share Link</button>
+        <button class="btn-secondary" onclick="window.print()">&#128424; Print Report</button>
+      </div>
+    </div><!-- /calculatedTab -->
+
+  </main>
+</div><!-- /calculatorPage -->
+
+<!-- Footer -->
+<footer class="footer">
+  <p>Built with trust by <a href="https://sabpaisa.in" target="_blank">SabPaisa</a> &mdash; Everyone's Payment Solution &mdash; 10,000+ Merchants</p>
+  <p style="margin-top:4px;font-size:12px;color:var(--gray-500);">This calculator provides estimates for strategic planning purposes only.</p>
+</footer>
+
+<script>
+// ===== BANK DATA (local image files) =====
+const bankData = {
+  boi:         { name: 'Bank of India',         logo: 'assets/banks/bank-of-india.png' },
+  indianbank:  { name: 'Indian Bank',           logo: 'assets/banks/indian-bank.png' },
+  unionbank:   { name: 'Union Bank of India',   logo: 'assets/banks/union-bank.png' },
+  canara:      { name: 'Canara Bank',           logo: 'assets/banks/canara-bank.webp' },
+  centralbank: { name: 'Central Bank of India', logo: 'assets/banks/central-bank.png' },
+  iob:         { name: 'Indian Overseas Bank',  logo: 'assets/banks/indian-overseas-bank.png' },
+  bom:         { name: 'Bank of Maharashtra',   logo: 'assets/banks/bank-of-maharashtra.png' }
+};
+
+let selectedBank = null;
+
+// ===== BANK DROPDOWN =====
+function onBankSelect() {
+  const val = document.getElementById('bankDropdown').value;
+  const preview = document.getElementById('bankLogoPreview');
+
+  if (val && bankData[val]) {
+    selectedBank = val;
+    const bank = bankData[val];
+    document.getElementById('previewLogo').src = bank.logo;
+    document.getElementById('previewLogo').alt = bank.name;
+    document.getElementById('previewName').textContent = bank.name;
+    preview.classList.add('visible');
+  } else {
+    selectedBank = null;
+    preview.classList.remove('visible');
+  }
+  validateBankSelection();
+}
+
+function validateBankSelection() {
+  const zone = document.getElementById('zonalOffice').value.trim();
+  document.getElementById('btnProceed').disabled = !(selectedBank && zone.length > 0);
+  document.getElementById('bankError').style.display = 'none';
+}
+
+function proceedToInput() {
+  const zone = document.getElementById('zonalOffice').value.trim();
+  if (!selectedBank || !zone) {
+    document.getElementById('bankError').style.display = 'block';
+    return;
+  }
+
+  const bank = bankData[selectedBank];
+
+  // Input tab banner
+  document.getElementById('inputBannerLogo').src = bank.logo;
+  document.getElementById('inputBannerLogo').alt = bank.name;
+  document.getElementById('inputBannerName').textContent = bank.name;
+  document.getElementById('inputBannerZone').textContent = 'Zonal Office: ' + zone;
+
+  // Results banner
+  document.getElementById('resultsBannerLogo').src = bank.logo;
+  document.getElementById('resultsBannerLogo').alt = bank.name;
+  document.getElementById('resultsBannerName').textContent = bank.name;
+  document.getElementById('resultsBannerZone').textContent = 'Zonal Office: ' + zone;
+
+  document.getElementById('bankSelectionPage').classList.remove('active');
+  document.getElementById('calculatorPage').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goBackToBankSelection() {
+  document.getElementById('calculatorPage').classList.remove('active');
+  document.getElementById('bankSelectionPage').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== TAB SWITCHING =====
+function switchTab(tab) {
+  const inputTab = document.getElementById('inputTab');
+  const calculatedTab = document.getElementById('calculatedTab');
+  const tabInput = document.getElementById('tabInput');
+  const tabCalculated = document.getElementById('tabCalculated');
+
+  if (tab === 'input') {
+    inputTab.classList.add('active'); calculatedTab.classList.remove('active');
+    tabInput.classList.add('active'); tabCalculated.classList.remove('active');
+  } else {
+    inputTab.classList.remove('active'); calculatedTab.classList.add('active');
+    tabInput.classList.remove('active'); tabCalculated.classList.add('active');
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===== CALCULATE & SWITCH =====
+function runCalculate() {
+  const lp = getVal('largePct'), mp = getVal('midPct'), sp = getVal('smallPct');
+  document.getElementById('distWarning').style.display = Math.abs(lp + mp + sp - 100) > 0.01 ? 'block' : 'none';
+  calculate();
+  document.getElementById('tabCalculated').disabled = false;
+  switchTab('calculated');
+}
+
+// ===== CALCULATION ENGINE =====
+function calculate() {
+  const totalBranches = getVal('totalBranches');
+  const keyBranchPct = getVal('keyBranchPct');
+  const keyBranches = Math.round(totalBranches * keyBranchPct / 100);
+
+  const leadsPerBranch = getVal('leadsPerBranch');
+  const remainingLeadsPct = getVal('remainingLeadsPct');
+  const keyBranchLeads = keyBranches * leadsPerBranch * 12;
+  const remainingBranches = totalBranches - keyBranches;
+  const remainingLeads = Math.round(remainingBranches * leadsPerBranch * (remainingLeadsPct / 100) * 12);
+  const totalLeads = keyBranchLeads + remainingLeads;
+
+  const largePct = getVal('largePct'), midPct = getVal('midPct'), smallPct = getVal('smallPct');
+  const largeLeads = Math.round(totalLeads * largePct / 100);
+  const midLeads = Math.round(totalLeads * midPct / 100);
+  const smallLeads = Math.round(totalLeads * smallPct / 100);
+
+  const largeConvRate = getVal('largeConvRate'), midConvRate = getVal('midConvRate'), smallConvRate = getVal('smallConvRate');
+  const largeMoU = Math.round(largeLeads * largeConvRate / 100);
+  const midMoU = Math.round(midLeads * midConvRate / 100);
+  const smallMoU = Math.round(smallLeads * smallConvRate / 100);
+  const totalMoU = largeMoU + midMoU + smallMoU;
+
+  const largeGMVPer = getVal('largeGMV'), midGMVPer = getVal('midGMV'), smallGMVPer = getVal('smallGMV');
+  const largeGMVTotal = largeMoU * largeGMVPer;
+  const midGMVTotal = midMoU * midGMVPer;
+  const smallGMVTotal = smallMoU * smallGMVPer;
+  const totalGMV = largeGMVTotal + midGMVTotal + smallGMVTotal;
+
+  setText('tblLargeMoU', fmtInt(largeMoU)); setText('tblMidMoU', fmtInt(midMoU)); setText('tblSmallMoU', fmtInt(smallMoU)); setText('tblTotalMoU', fmtInt(totalMoU));
+  setText('tblLargeGMVPer', '\u20B9' + fmtDec(largeGMVPer) + ' Cr'); setText('tblMidGMVPer', '\u20B9' + fmtDec(midGMVPer) + ' Cr'); setText('tblSmallGMVPer', '\u20B9' + fmtDec(smallGMVPer) + ' Cr');
+  setText('tblLargeGMVTotal', '\u20B9' + fmtDec(largeGMVTotal) + ' Cr'); setText('tblMidGMVTotal', '\u20B9' + fmtDec(midGMVTotal) + ' Cr'); setText('tblSmallGMVTotal', '\u20B9' + fmtDec(smallGMVTotal) + ' Cr');
+  setText('tblTotalGMV', '\u20B9' + fmtComma(totalGMV) + ' Cr');
+
+  if (totalGMV > 0) {
+    const lP = (largeGMVTotal / totalGMV * 100).toFixed(1), mP = (midGMVTotal / totalGMV * 100).toFixed(1), sP = (smallGMVTotal / totalGMV * 100).toFixed(1);
+    document.querySelector('.bar-large').style.width = lP + '%'; document.querySelector('.bar-mid').style.width = mP + '%'; document.querySelector('.bar-small').style.width = sP + '%';
+    setText('barLargePct', lP + '%'); setText('barMidPct', mP + '%'); setText('barSmallPct', sP + '%');
+  }
+
+  const avgTicket = getVal('avgTicket'), avgNFNI = getVal('avgNFNI');
+  const totalGMVRs = totalGMV * 10000000;
+  const totalTxn = avgTicket > 0 ? Math.round(totalGMVRs / avgTicket) : 0;
+  const totalNFNIVal = totalTxn * avgNFNI;
+  const totalNFNICr = totalNFNIVal / 10000000;
+
+  setText('totalTxn', fmtLakh(totalTxn)); setText('totalNFNI', '\u20B9' + fmtDec(totalNFNICr) + ' Cr');
+
+  setText('kpiKeyBranches', fmtInt(keyBranches)); setText('kpiLeads', fmtInt(totalLeads)); setText('kpiMoUs', fmtInt(totalMoU));
+  setText('kpiGMV', '\u20B9' + fmtComma(totalGMV) + ' Cr'); setText('kpiNFNI', '\u20B9' + fmtDec(totalNFNICr) + ' Cr');
+  const convRate = totalLeads > 0 ? Math.round(totalMoU / totalLeads * 100) : 0;
+  setText('kpiConvRate', convRate + '%');
+  const revPerBranch = keyBranches > 0 ? totalGMV / keyBranches : 0;
+  setText('kpiRevBranch', '\u20B9' + fmtDec(revPerBranch) + ' Cr');
+  setText('kpiTxnVol', fmtLakhShort(totalTxn));
+
+  setText('sumLargeLeads', fmtInt(largeLeads)); setText('sumMidLeads', fmtInt(midLeads)); setText('sumSmallLeads', fmtInt(smallLeads));
+  setText('sumLargeMoU', fmtInt(largeMoU)); setText('sumMidMoU', fmtInt(midMoU)); setText('sumSmallMoU', fmtInt(smallMoU));
+  setText('sumLargeGMV', '\u20B9' + fmtDec(largeGMVTotal) + ' Cr'); setText('sumMidGMV', '\u20B9' + fmtDec(midGMVTotal) + ' Cr'); setText('sumSmallGMV', '\u20B9' + fmtDec(smallGMVTotal) + ' Cr');
+}
+
+// ===== HELPERS =====
+function getVal(id) { return parseFloat(document.getElementById(id).value) || 0; }
+function setText(id, val) { document.getElementById(id).textContent = val; }
+function fmtInt(n) { return n.toLocaleString('en-IN'); }
+function fmtDec(n) { if (Number.isInteger(n)) return n.toLocaleString('en-IN'); return n.toLocaleString('en-IN', { minimumFractionDigits: 1, maximumFractionDigits: 1 }); }
+function fmtComma(n) { return n.toLocaleString('en-IN', { minimumFractionDigits: n % 1 !== 0 ? 1 : 0, maximumFractionDigits: 1 }); }
+function fmtLakh(n) { if (n >= 10000000) return (n / 10000000).toFixed(1) + ' Cr'; if (n >= 100000) return (n / 100000).toFixed(1) + ' Lakh'; return n.toLocaleString('en-IN'); }
+function fmtLakhShort(n) { if (n >= 10000000) return (n / 10000000).toFixed(1) + 'Cr'; if (n >= 100000) return (n / 100000).toFixed(1) + 'L'; return n.toLocaleString('en-IN'); }
+
+// ===== PRESETS =====
+function loadPreset(type) {
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  const presets = {
+    default: { totalBranches:255, keyBranchPct:15, leadsPerBranch:1, remainingLeadsPct:0, largePct:5, midPct:20, smallPct:75, largeConvRate:50, midConvRate:60, smallConvRate:70, largeGMV:50, midGMV:10, smallGMV:0.5, avgTicket:200, avgNFNI:3 },
+    small:   { totalBranches:50,  keyBranchPct:20, leadsPerBranch:2, remainingLeadsPct:5, largePct:5, midPct:25, smallPct:70, largeConvRate:50, midConvRate:60, smallConvRate:70, largeGMV:50, midGMV:10, smallGMV:0.5, avgTicket:200, avgNFNI:3 },
+    large:   { totalBranches:1000,keyBranchPct:10, leadsPerBranch:1, remainingLeadsPct:0, largePct:5, midPct:20, smallPct:75, largeConvRate:50, midConvRate:60, smallConvRate:70, largeGMV:50, midGMV:10, smallGMV:0.5, avgTicket:200, avgNFNI:3 },
+    reset:   { totalBranches:0,   keyBranchPct:0,  leadsPerBranch:0, remainingLeadsPct:0, largePct:0, midPct:0,  smallPct:0,  largeConvRate:0,  midConvRate:0,  smallConvRate:0,  largeGMV:0,  midGMV:0,  smallGMV:0,   avgTicket:0,   avgNFNI:0 }
+  };
+  const p = presets[type];
+  Object.keys(p).forEach(k => { document.getElementById(k).value = p[k]; });
+}
+
+// ===== PDF DOWNLOAD =====
+function downloadPDF() {
+  const printWin = window.open('', '_blank');
+  const bankName = document.getElementById('resultsBannerName').textContent;
+  const zoneName = document.getElementById('resultsBannerZone').textContent;
+  const bankLogoSrc = document.getElementById('resultsBannerLogo').src;
+  const kb = document.getElementById('kpiKeyBranches').textContent;
+  const leads = document.getElementById('kpiLeads').textContent;
+  const mous = document.getElementById('kpiMoUs').textContent;
+  const gmv = document.getElementById('kpiGMV').textContent;
+  const nfni = document.getElementById('kpiNFNI').textContent;
+  const conv = document.getElementById('kpiConvRate').textContent;
+  const rev = document.getElementById('kpiRevBranch').textContent;
+  const txn = document.getElementById('kpiTxnVol').textContent;
+  const sLL = document.getElementById('sumLargeLeads').textContent;
+  const sLM = document.getElementById('sumLargeMoU').textContent;
+  const sLG = document.getElementById('sumLargeGMV').textContent;
+  const sML = document.getElementById('sumMidLeads').textContent;
+  const sMM = document.getElementById('sumMidMoU').textContent;
+  const sMG = document.getElementById('sumMidGMV').textContent;
+  const sSL = document.getElementById('sumSmallLeads').textContent;
+  const sSM = document.getElementById('sumSmallMoU').textContent;
+  const sSG = document.getElementById('sumSmallGMV').textContent;
+
+  printWin.document.write(`<!DOCTYPE html><html><head><title>SabPaisa - Bank Business Calculator</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',sans-serif;padding:40px;color:#344054;max-width:800px;margin:0 auto}
+    .hdr{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+    .hdr img{height:36px;width:auto;object-fit:contain}
+    .bank-hdr{display:flex;align-items:center;gap:16px;margin:20px 0;padding:16px 20px;background:#F4F7FC;border-radius:12px;border:1px solid #E4E7EC}
+    .bank-hdr img{width:64px;height:48px;object-fit:contain}
+    .bank-hdr .bname{font-size:20px;font-weight:700;color:#101828}
+    .bank-hdr .bzone{font-size:14px;color:#667085}
+    h1{font-size:22px;color:#002E8B;margin:8px 0 4px;font-weight:600}
+    .sub{color:#667085;font-size:14px;margin-bottom:24px}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+    .card{border:1.5px solid #E4E7EC;border-radius:10px;padding:16px;text-align:center}
+    .card .v{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:#101828;margin-bottom:2px}
+    .card .l{font-size:12px;color:#667085;font-weight:500}
+    table{width:100%;border-collapse:collapse;margin-bottom:24px}
+    th{background:#F2F4F7;padding:10px 12px;text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:0.5px;color:#667085;font-weight:600}
+    td{padding:10px 12px;border-bottom:1px solid #F2F4F7;font-size:14px}
+    td:not(:first-child),th:not(:first-child){text-align:right;font-family:'JetBrains Mono',monospace}
+    tr:last-child td{font-weight:700;color:#002E8B;background:rgba(0,46,139,0.03)}
+    .foot{margin-top:32px;padding-top:16px;border-top:1px solid #E4E7EC;font-size:12px;color:#98A2B3;text-align:center}
+    .foot a{color:#FF8800;text-decoration:none}
+    @media print{body{padding:20px}}
+  </style></head><body>
+  <div class="hdr"><img src="${window.location.href.substring(0, window.location.href.lastIndexOf('/'))}/assets/logos/sabpaisa-color.png" alt="SabPaisa"></div>
+  <div class="bank-hdr"><img src="${bankLogoSrc}" alt="${bankName}"><div><div class="bname">${bankName}</div><div class="bzone">${zoneName}</div></div></div>
+  <h1>Bank Business Calculator - Summary</h1>
+  <p class="sub">Generated on ${new Date().toLocaleDateString('en-IN',{day:'numeric',month:'long',year:'numeric'})}</p>
+  <div class="grid">
+    <div class="card"><div class="v">${kb}</div><div class="l">Key Branches</div></div>
+    <div class="card"><div class="v">${leads}</div><div class="l">Annual Leads</div></div>
+    <div class="card"><div class="v">${mous}</div><div class="l">MoUs Signed</div></div>
+    <div class="card"><div class="v">${gmv}</div><div class="l">Total GMV</div></div>
+    <div class="card"><div class="v">${nfni}</div><div class="l">NFNI Earned</div></div>
+    <div class="card"><div class="v">${conv}</div><div class="l">Conversion Rate</div></div>
+    <div class="card"><div class="v">${rev}</div><div class="l">Revenue / Branch</div></div>
+    <div class="card"><div class="v">${txn}</div><div class="l">Transactions</div></div>
+  </div>
+  <h2 style="font-size:16px;color:#002E8B;margin-bottom:12px;">Segment Breakdown</h2>
+  <table>
+    <thead><tr><th>Segment</th><th>Leads</th><th>Converted</th><th>GMV</th></tr></thead>
+    <tbody>
+      <tr><td>Large Accounts</td><td>${sLL}</td><td>${sLM}</td><td>${sLG}</td></tr>
+      <tr><td>Mid Accounts</td><td>${sML}</td><td>${sMM}</td><td>${sMG}</td></tr>
+      <tr><td>Small Accounts</td><td>${sSL}</td><td>${sSM}</td><td>${sSG}</td></tr>
+      <tr><td>Total</td><td>${leads}</td><td>${mous}</td><td>${gmv}</td></tr>
+    </tbody>
+  </table>
+  <div class="foot">
+    <p>Powered by <a href="https://sabpaisa.in">SabPaisa</a> &mdash; Everyone's Payment Solution</p>
+    <p style="margin-top:4px">This calculator provides estimates for strategic planning purposes only.</p>
+  </div>
+  </body></html>`);
+  printWin.document.close();
+  setTimeout(() => printWin.print(), 500);
+}
+
+// ===== SHARE =====
+function shareCalc() {
+  const params = new URLSearchParams();
+  if (selectedBank) params.set('bank', selectedBank);
+  params.set('zone', document.getElementById('zonalOffice').value);
+  ['totalBranches','keyBranchPct','leadsPerBranch','remainingLeadsPct','largePct','midPct','smallPct','largeConvRate','midConvRate','smallConvRate','largeGMV','midGMV','smallGMV','avgTicket','avgNFNI'].forEach(id => {
+    params.set(id, document.getElementById(id).value);
+  });
+  const url = window.location.origin + window.location.pathname + '?' + params.toString();
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = event.target.closest('button');
+    const orig = btn.innerHTML;
+    btn.innerHTML = '&#10003; Copied!';
+    btn.style.background = '#10B981';
+    setTimeout(() => { btn.innerHTML = orig; btn.style.background = ''; }, 2000);
+  }).catch(() => { prompt('Copy this link:', url); });
+}
+
+// ===== LOAD FROM URL PARAMS =====
+function loadFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  if (params.size === 0) return false;
+  if (params.has('bank') && bankData[params.get('bank')]) {
+    document.getElementById('bankDropdown').value = params.get('bank');
+    onBankSelect();
+  }
+  if (params.has('zone')) document.getElementById('zonalOffice').value = params.get('zone');
+  ['totalBranches','keyBranchPct','leadsPerBranch','remainingLeadsPct','largePct','midPct','smallPct','largeConvRate','midConvRate','smallConvRate','largeGMV','midGMV','smallGMV','avgTicket','avgNFNI'].forEach(id => {
+    if (params.has(id)) document.getElementById(id).value = params.get(id);
+  });
+  return true;
+}
+
+// ===== INIT =====
+const hasParams = loadFromURL();
+if (hasParams && selectedBank) { proceedToInput(); runCalculate(); }
+</script>
+
+</body>
+</html>
