@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Split Settlement - Government Flyer | SabPaisa</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #0a0a0a; display: flex; flex-direction: column; align-items: center; padding: 40px; gap: 24px; }
+  .label { color: #666; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+
+  .flyer {
+    width: 1200px; height: 1200px;
+    background: linear-gradient(150deg, #001830 0%, #002E5C 30%, #002E8B 60%, #004BBF 100%);
+    border-radius: 16px; overflow: hidden; position: relative;
+    display: flex; flex-direction: column; color: white;
+  }
+  .flyer::before { content: ''; position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 800px; height: 400px; background: radial-gradient(circle, rgba(11,139,255,0.1) 0%, transparent 70%); border-radius: 50%; }
+  .flyer::after { content: ''; position: absolute; bottom: -80px; right: -60px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(255,136,0,0.1) 0%, transparent 70%); border-radius: 50%; }
+  .grid-overlay { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px); background-size: 60px 60px; }
+
+  /* Emblem accent */
+  .emblem { position: absolute; top: 180px; right: 56px; width: 120px; height: 120px; border: 2px solid rgba(255,255,255,0.04); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 56px; z-index: 2; opacity: .15; }
+  .emblem::before { content: ''; position: absolute; inset: -12px; border: 1px dashed rgba(255,255,255,0.05); border-radius: 50%; }
+
+  .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 44px 56px 0; position: relative; z-index: 5; }
+  .logo { height: 36px; }
+  .badge { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #6EE7B7; padding: 8px 20px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+
+  .headline { padding: 48px 56px 0; position: relative; z-index: 5; max-width: 800px; }
+  .headline h1 { font-size: 54px; font-weight: 900; line-height: 1.08; letter-spacing: -2px; }
+  .headline h1 .accent { background: linear-gradient(135deg, #FF8800, #FFAC61); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .headline p { font-size: 20px; color: rgba(255,255,255,.5); margin-top: 16px; }
+
+  /* CHALLAN FLOW */
+  .visual-area { flex: 1; padding: 36px 56px; position: relative; z-index: 5; display: flex; flex-direction: column; gap: 20px; }
+
+  /* Challan types row */
+  .challans-row { display: flex; gap: 16px; }
+  .challan-card {
+    flex: 1; background: rgba(255,255,255,0.06); backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
+    padding: 22px; text-align: center; position: relative; overflow: hidden;
+    transition: all .3s;
+  }
+  .challan-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-3px); }
+  .challan-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .challan-card:nth-child(1)::before { background: #EF4444; }
+  .challan-card:nth-child(2)::before { background: #0B8BFF; }
+  .challan-card:nth-child(3)::before { background: #10B981; }
+  .challan-emoji { font-size: 32px; margin-bottom: 8px; }
+  .challan-type { font-size: 14px; font-weight: 700; }
+  .challan-amt { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; margin: 4px 0; }
+  .challan-card:nth-child(1) .challan-amt { color: #FCA5A5; }
+  .challan-card:nth-child(2) .challan-amt { color: #93C5FD; }
+  .challan-card:nth-child(3) .challan-amt { color: #6EE7B7; }
+  .challan-sub { font-size: 10px; opacity: .35; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; }
+
+  /* Arrow down */
+  .flow-arrow { text-align: center; font-size: 12px; opacity: .3; padding: 4px 0; letter-spacing: 2px; }
+
+  /* Split results */
+  .split-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .dept-card {
+    background: rgba(255,255,255,0.06); backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 14px;
+    padding: 20px; border-top: 4px solid; text-align: center;
+    transition: all .3s;
+  }
+  .dept-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-3px); }
+  .dept-card:nth-child(1) { border-top-color: #EF4444; }
+  .dept-card:nth-child(2) { border-top-color: #0B8BFF; }
+  .dept-card:nth-child(3) { border-top-color: #10B981; }
+  .dept-card:nth-child(4) { border-top-color: #F59E0B; }
+  .dept-card:nth-child(5) { border-top-color: #8B5CF6; }
+  .dept-card:nth-child(6) { border-top-color: #EC4899; }
+  .dept-emoji { font-size: 24px; margin-bottom: 6px; }
+  .dept-name { font-size: 13px; font-weight: 700; }
+  .dept-amt { font-family: 'JetBrains Mono', monospace; font-size: 18px; font-weight: 700; margin: 4px 0; }
+  .dept-card:nth-child(1) .dept-amt { color: #FCA5A5; }
+  .dept-card:nth-child(2) .dept-amt { color: #93C5FD; }
+  .dept-card:nth-child(3) .dept-amt { color: #6EE7B7; }
+  .dept-card:nth-child(4) .dept-amt { color: #FDE68A; }
+  .dept-card:nth-child(5) .dept-amt { color: #C4B5FD; }
+  .dept-card:nth-child(6) .dept-amt { color: #F9A8D4; }
+  .dept-tag { font-size: 9px; padding: 2px 8px; border-radius: 100px; background: rgba(255,255,255,0.06); font-weight: 600; opacity: .5; display: inline-block; }
+
+  .institute-note {
+    text-align: center; font-size: 12px; opacity: .25; padding: 4px 0;
+    position: relative; z-index: 5;
+  }
+
+  .bottom-bar { display: flex; justify-content: space-between; align-items: center; padding: 0 56px 44px; position: relative; z-index: 5; }
+  .stats { display: flex; gap: 36px; }
+  .stat-value { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 700; color: #FF8800; }
+  .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; opacity: .35; font-weight: 600; margin-top: 2px; }
+  .cta-pill { background: linear-gradient(135deg, #FF8800, #FF6B00); color: white; padding: 14px 32px; border-radius: 100px; font-size: 15px; font-weight: 700; box-shadow: 0 8px 32px rgba(255,136,0,.3); }
+</style>
+</head>
+<body>
+<div class="label">LinkedIn / Instagram &mdash; 1200 x 1200px &mdash; Government Segment</div>
+
+<div class="flyer">
+  <div class="grid-overlay"></div>
+  <div class="emblem">&#127963;</div>
+
+  <div class="top-bar">
+    <img src="../assets/logos/primary-horizontal-white.svg" alt="SabPaisa" class="logo">
+    <div class="badge">Govt Collections</div>
+  </div>
+
+  <div class="headline">
+    <h1>One Challan.<br><span class="accent">Multiple Depts. Paid.</span></h1>
+    <p>Institute-based split routing for government fee collection</p>
+  </div>
+
+  <div class="visual-area">
+    <div class="challans-row">
+      <div class="challan-card">
+        <div class="challan-emoji">&#128661;</div>
+        <div class="challan-type">Traffic Challan</div>
+        <div class="challan-amt">&#8377;1,200</div>
+        <div class="challan-sub">3 Departments</div>
+      </div>
+      <div class="challan-card">
+        <div class="challan-emoji">&#127970;</div>
+        <div class="challan-type">Property Tax</div>
+        <div class="challan-amt">&#8377;8,500</div>
+        <div class="challan-sub">3 Departments</div>
+      </div>
+      <div class="challan-card">
+        <div class="challan-emoji">&#128196;</div>
+        <div class="challan-type">License Fee</div>
+        <div class="challan-amt">&#8377;3,000</div>
+        <div class="challan-sub">2 Departments</div>
+      </div>
+    </div>
+
+    <div class="flow-arrow">&#9660; AUTO SPLIT &#9660;</div>
+
+    <div class="split-grid">
+      <div class="dept-card">
+        <div class="dept-emoji">&#128659;</div>
+        <div class="dept-name">Transport Dept</div>
+        <div class="dept-amt">&#8377;792</div>
+        <div class="dept-tag">DYNAMIC A/C</div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-emoji">&#127974;</div>
+        <div class="dept-name">State Treasury</div>
+        <div class="dept-amt">&#8377;347</div>
+        <div class="dept-tag">DYNAMIC A/C</div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-emoji">&#128187;</div>
+        <div class="dept-name">Portal Fee</div>
+        <div class="dept-amt">&#8377;49</div>
+        <div class="dept-tag">STATIC A/C</div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-emoji">&#127963;</div>
+        <div class="dept-name">Municipal Corp</div>
+        <div class="dept-amt">&#8377;5,950</div>
+        <div class="dept-tag">DYNAMIC A/C</div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-emoji">&#128200;</div>
+        <div class="dept-name">Revenue Dept</div>
+        <div class="dept-amt">&#8377;2,380</div>
+        <div class="dept-tag">DYNAMIC A/C</div>
+      </div>
+      <div class="dept-card">
+        <div class="dept-emoji">&#128176;</div>
+        <div class="dept-name">Licensing Dept</div>
+        <div class="dept-amt">&#8377;2,820</div>
+        <div class="dept-tag">DYNAMIC A/C</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="institute-note">Both accounts AND amounts change per challan type &bull; Full audit trail for compliance</div>
+
+  <div class="bottom-bar">
+    <div class="stats">
+      <div class="stat-item"><div class="stat-value">100%</div><div class="stat-label">Audit Trail</div></div>
+      <div class="stat-item"><div class="stat-value">0</div><div class="stat-label">Manual Routing</div></div>
+      <div class="stat-item"><div class="stat-value">Multi</div><div class="stat-label">Dept Split</div></div>
+      <div class="stat-item"><div class="stat-value">Compliant</div><div class="stat-label">Transparent</div></div>
+    </div>
+    <div class="cta-pill">Get Started &#8594;</div>
+  </div>
+</div>
+</body>
+</html>

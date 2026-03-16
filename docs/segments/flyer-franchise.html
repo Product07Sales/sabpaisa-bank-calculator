@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Split Settlement - Franchise Flyer | SabPaisa</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #0a0a0a; display: flex; flex-direction: column; align-items: center; padding: 40px; gap: 24px; }
+  .label { color: #666; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+
+  .flyer {
+    width: 1200px; height: 1200px;
+    background: linear-gradient(150deg, #1A0A00 0%, #3D1D00 25%, #6B3400 45%, #002E8B 100%);
+    border-radius: 16px; overflow: hidden; position: relative;
+    display: flex; flex-direction: column; color: white;
+  }
+  .flyer::before { content: ''; position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(255,136,0,0.18) 0%, transparent 70%); border-radius: 50%; }
+  .flyer::after { content: ''; position: absolute; bottom: -80px; left: 40%; width: 600px; height: 400px; background: radial-gradient(circle, rgba(11,139,255,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .grid-overlay { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px); background-size: 60px 60px; }
+
+  .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 44px 56px 0; position: relative; z-index: 5; }
+  .logo { height: 36px; }
+  .badge { background: rgba(255,136,0,0.2); border: 1px solid rgba(255,136,0,0.35); color: #FFAC61; padding: 8px 20px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+
+  .headline { padding: 48px 56px 0; position: relative; z-index: 5; }
+  .headline h1 { font-size: 54px; font-weight: 900; line-height: 1.08; letter-spacing: -2px; }
+  .headline h1 .accent { background: linear-gradient(135deg, #FF8800, #FFAC61); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .headline p { font-size: 20px; color: rgba(255,255,255,.5); margin-top: 16px; }
+
+  /* VISUAL */
+  .visual-area { flex: 1; padding: 36px 56px; position: relative; z-index: 5; display: flex; flex-direction: column; gap: 28px; }
+
+  /* DONUT + SPLIT */
+  .donut-row { display: flex; align-items: center; gap: 48px; }
+
+  .donut-container { position: relative; width: 260px; height: 260px; min-width: 260px; }
+  .donut-svg { width: 260px; height: 260px; transform: rotate(-90deg); }
+  .donut-ring { fill: none; stroke-width: 28; }
+  .donut-70 { stroke: #FF8800; stroke-dasharray: 502.65; stroke-dashoffset: 150.8; stroke-linecap: round; }
+  .donut-30 { stroke: #0B8BFF; stroke-dasharray: 502.65; stroke-dashoffset: 351.86; stroke-dashoffset: 351.86; stroke-linecap: round; }
+  .donut-center {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    text-align: center;
+  }
+  .donut-center .big { font-family: 'JetBrains Mono', monospace; font-size: 36px; font-weight: 700; }
+  .donut-center .small { font-size: 12px; opacity: .4; margin-top: 2px; }
+
+  .split-details { flex: 1; display: flex; flex-direction: column; gap: 16px; }
+  .split-party {
+    background: rgba(255,255,255,0.06); backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
+    padding: 24px 28px; border-left: 5px solid;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: all .3s;
+  }
+  .split-party:hover { background: rgba(255,255,255,0.1); transform: translateX(4px); }
+  .split-party.franchisee { border-left-color: #FF8800; }
+  .split-party.franchisor { border-left-color: #0B8BFF; }
+  .sp-left { display: flex; align-items: center; gap: 16px; }
+  .sp-icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 26px; }
+  .franchisee .sp-icon { background: rgba(255,136,0,0.15); }
+  .franchisor .sp-icon { background: rgba(11,139,255,0.15); }
+  .sp-name { font-size: 18px; font-weight: 700; }
+  .sp-pct { font-size: 13px; opacity: .4; margin-top: 2px; }
+  .sp-amount { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 700; }
+  .franchisee .sp-amount { color: #FFAC61; }
+  .franchisor .sp-amount { color: #93C5FD; }
+  .sp-tag { font-size: 10px; padding: 3px 10px; border-radius: 100px; background: rgba(255,255,255,0.06); font-weight: 600; opacity: .5; display: inline-block; margin-top: 4px; }
+
+  /* MULTI OUTLET VISUAL */
+  .outlets-section { display: flex; align-items: center; gap: 20px; }
+  .outlets-label { font-size: 12px; opacity: .3; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; writing-mode: vertical-rl; text-orientation: mixed; }
+  .outlets-grid { display: flex; gap: 12px; flex: 1; }
+  .outlet-card {
+    flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px; padding: 16px; text-align: center;
+    transition: all .3s;
+  }
+  .outlet-card:hover { background: rgba(255,255,255,0.08); transform: translateY(-3px); }
+  .outlet-emoji { font-size: 28px; margin-bottom: 6px; }
+  .outlet-name { font-size: 12px; font-weight: 700; }
+  .outlet-bar { height: 6px; border-radius: 3px; margin-top: 10px; display: flex; gap: 2px; overflow: hidden; }
+  .outlet-bar .o { border-radius: 3px; height: 100%; }
+  .outlet-bar .o70 { background: #FF8800; }
+  .outlet-bar .o30 { background: #0B8BFF; }
+  .outlet-label-row { display: flex; justify-content: space-between; margin-top: 4px; }
+  .outlet-label-row span { font-size: 9px; opacity: .35; font-family: 'JetBrains Mono', monospace; font-weight: 600; }
+
+  .pg-note { text-align: center; font-size: 11px; opacity: .2; padding: 0 56px 4px; position: relative; z-index: 5; }
+
+  .bottom-bar { display: flex; justify-content: space-between; align-items: center; padding: 0 56px 44px; position: relative; z-index: 5; }
+  .stats { display: flex; gap: 36px; }
+  .stat-value { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 700; color: #FF8800; }
+  .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; opacity: .35; font-weight: 600; margin-top: 2px; }
+  .cta-pill { background: linear-gradient(135deg, #FF8800, #FF6B00); color: white; padding: 14px 32px; border-radius: 100px; font-size: 15px; font-weight: 700; box-shadow: 0 8px 32px rgba(255,136,0,.3); }
+</style>
+</head>
+<body>
+<div class="label">LinkedIn / Instagram &mdash; 1200 x 1200px &mdash; Franchise Segment</div>
+
+<div class="flyer">
+  <div class="grid-overlay"></div>
+
+  <div class="top-bar">
+    <img src="../assets/logos/primary-horizontal-white.svg" alt="SabPaisa" class="logo">
+    <div class="badge">Revenue Share</div>
+  </div>
+
+  <div class="headline">
+    <h1>Every Transaction.<br><span class="accent">70/30 Split. Auto.</span></h1>
+    <p>Automated franchise revenue share &mdash; zero monthly reconciliation</p>
+  </div>
+
+  <div class="visual-area">
+    <!-- Donut + Split Details -->
+    <div class="donut-row">
+      <div class="donut-container">
+        <svg class="donut-svg" viewBox="0 0 200 200">
+          <circle class="donut-ring donut-30" cx="100" cy="100" r="80" stroke-dasharray="150.8 351.86" stroke-dashoffset="0"/>
+          <circle class="donut-ring donut-70" cx="100" cy="100" r="80" stroke-dasharray="351.86 150.8" stroke-dashoffset="-150.8"/>
+        </svg>
+        <div class="donut-center">
+          <div class="big" style="color:#FF8800;">70:30</div>
+          <div class="small">Revenue Split</div>
+        </div>
+      </div>
+
+      <div class="split-details">
+        <div class="split-party franchisee">
+          <div class="sp-left">
+            <div class="sp-icon">&#127975;</div>
+            <div>
+              <div class="sp-name">Franchisee (Outlet)</div>
+              <div class="sp-pct">70% &bull; Primary beneficiary</div>
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <div class="sp-amount">&#8377;2,062</div>
+            <div class="sp-tag">STATIC A/C</div>
+          </div>
+        </div>
+        <div class="split-party franchisor">
+          <div class="sp-left">
+            <div class="sp-icon">&#127963;</div>
+            <div>
+              <div class="sp-name">Franchisor (HQ)</div>
+              <div class="sp-pct">30% &bull; Auto-deducted</div>
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <div class="sp-amount">&#8377;884</div>
+            <div class="sp-tag">STATIC A/C</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Multi-outlet -->
+    <div class="outlets-section">
+      <div class="outlets-label">ALL OUTLETS</div>
+      <div class="outlets-grid">
+        <div class="outlet-card">
+          <div class="outlet-emoji">&#127828;</div>
+          <div class="outlet-name">Restaurant Chain</div>
+          <div class="outlet-bar"><span class="o o70" style="width:70%"></span><span class="o o30" style="width:30%"></span></div>
+          <div class="outlet-label-row"><span>70%</span><span>30%</span></div>
+        </div>
+        <div class="outlet-card">
+          <div class="outlet-emoji">&#128090;</div>
+          <div class="outlet-name">Retail Franchise</div>
+          <div class="outlet-bar"><span class="o o70" style="width:70%"></span><span class="o o30" style="width:30%"></span></div>
+          <div class="outlet-label-row"><span>70%</span><span>30%</span></div>
+        </div>
+        <div class="outlet-card">
+          <div class="outlet-emoji">&#128135;</div>
+          <div class="outlet-name">Salon Chain</div>
+          <div class="outlet-bar"><span class="o o70" style="width:70%"></span><span class="o o30" style="width:30%"></span></div>
+          <div class="outlet-label-row"><span>70%</span><span>30%</span></div>
+        </div>
+        <div class="outlet-card">
+          <div class="outlet-emoji">&#127947;</div>
+          <div class="outlet-name">Gym Franchise</div>
+          <div class="outlet-bar"><span class="o o70" style="width:70%"></span><span class="o o30" style="width:30%"></span></div>
+          <div class="outlet-label-row"><span>70%</span><span>30%</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-note">Customer pays &#8377;3,000 &bull; PG fee &#8377;54 prorated &bull; Net &#8377;2,946 split 70/30 automatically</div>
+
+  <div class="bottom-bar">
+    <div class="stats">
+      <div class="stat-item"><div class="stat-value">70/30</div><div class="stat-label">Revenue Share</div></div>
+      <div class="stat-item"><div class="stat-value">0</div><div class="stat-label">Reconciliation</div></div>
+      <div class="stat-item"><div class="stat-value">Instant</div><div class="stat-label">Visibility</div></div>
+      <div class="stat-item"><div class="stat-value">0</div><div class="stat-label">Trust Issues</div></div>
+    </div>
+    <div class="cta-pill">Get Started &#8594;</div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Split Settlement for Marketplaces | SabPaisa</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #0a0a0a; display: flex; flex-direction: column; align-items: center; padding: 40px; gap: 32px; }
+  .page-label { color: #555; font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; }
+  .flyer { width: 1200px; height: 1200px; background: #FFFFFF; border-radius: 20px; overflow: hidden; display: flex; flex-direction: column; }
+
+  /* HEADER */
+  .header { background: linear-gradient(135deg, #1A0535 0%, #3D1070 40%, #6D44E5 100%); padding: 36px 52px 42px; position: relative; overflow: hidden; }
+  .header::before { content: ''; position: absolute; top: -60px; right: -40px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,136,0,0.12) 0%, transparent 70%); border-radius: 50%; }
+  .header-top { display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 2; margin-bottom: 28px; }
+  .logo { height: 32px; }
+  .header-badge { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); color: white; padding: 7px 18px; border-radius: 100px; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; display: flex; align-items: center; gap: 8px; }
+  .header-badge .dot { width: 7px; height: 7px; background: #FF8800; border-radius: 50%; }
+  .header-text { position: relative; z-index: 2; }
+  .header-text h1 { font-size: 42px; font-weight: 900; color: white; line-height: 1.1; letter-spacing: -1.5px; }
+  .header-text h1 span { color: #FFAC61; }
+  .header-text p { font-size: 16px; color: rgba(255,255,255,0.6); margin-top: 10px; }
+
+  /* FLOW SECTION */
+  .flow-section { flex: 1; padding: 32px 52px 20px; background: #FAFBFD; border-bottom: 1px solid #EEF0F6; display: flex; flex-direction: column; }
+  .flow-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #6D44E5; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+  .flow-title::before { content: ''; width: 20px; height: 2px; background: #FF8800; border-radius: 1px; }
+
+  .flow-diagram { flex: 1; display: flex; gap: 24px; align-items: center; }
+
+  /* 3 ORDERS column */
+  .orders-col { display: flex; flex-direction: column; gap: 10px; min-width: 210px; }
+  .order-card { background: white; border: 1px solid #EEF0F6; border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; gap: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+  .order-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+  .order-card:nth-child(1) .order-icon { background: #EFF6FF; }
+  .order-card:nth-child(2) .order-icon { background: #FFF7ED; }
+  .order-card:nth-child(3) .order-icon { background: #ECFDF5; }
+  .order-num { font-size: 10px; color: #9CA3AF; font-weight: 600; }
+  .order-name { font-size: 13px; font-weight: 700; color: #111827; }
+  .order-amt { font-family: 'JetBrains Mono', monospace; font-size: 12px; font-weight: 600; color: #6B7280; }
+
+  /* SVG FLOW */
+  .flow-svg-area { flex: 1; height: 340px; position: relative; min-width: 180px; }
+  .flow-svg-area svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .flow-path { fill: none; stroke-width: 2; stroke-dasharray: 6 4; opacity: 0.4; }
+
+  /* RESULTS */
+  .results-col { display: flex; flex-direction: column; gap: 8px; min-width: 320px; }
+  .result-card { display: flex; align-items: center; gap: 12px; background: white; border: 1px solid #EEF0F6; border-radius: 12px; padding: 14px 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); border-left: 4px solid; }
+  .result-card:nth-child(1) { border-left-color: #3B82F6; }
+  .result-card:nth-child(2) { border-left-color: #F97316; }
+  .result-card:nth-child(3) { border-left-color: #10B981; }
+  .result-card:nth-child(4) { border-left-color: #6D44E5; }
+  .rc-icon { width: 36px; height: 36px; min-width: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .result-card:nth-child(1) .rc-icon { background: #EFF6FF; }
+  .result-card:nth-child(2) .rc-icon { background: #FFF7ED; }
+  .result-card:nth-child(3) .rc-icon { background: #ECFDF5; }
+  .result-card:nth-child(4) .rc-icon { background: #F5F3FF; }
+  .rc-info { flex: 1; }
+  .rc-name { font-size: 13px; font-weight: 700; color: #111827; }
+  .rc-desc { font-size: 10px; color: #9CA3AF; margin-top: 1px; }
+  .rc-amount { font-family: 'JetBrains Mono', monospace; font-size: 17px; font-weight: 700; text-align: right; }
+  .result-card:nth-child(1) .rc-amount { color: #3B82F6; }
+  .result-card:nth-child(2) .rc-amount { color: #F97316; }
+  .result-card:nth-child(3) .rc-amount { color: #10B981; }
+  .result-card:nth-child(4) .rc-amount { color: #6D44E5; }
+  .rc-tag { font-size: 8px; padding: 2px 7px; border-radius: 100px; font-weight: 700; display: inline-block; }
+  .tag-dynamic { background: #FFF7ED; color: #F97316; }
+  .tag-static { background: #F5F3FF; color: #6D44E5; }
+
+  .flow-footnote { text-align: center; font-size: 11px; color: #9CA3AF; margin-top: 14px; }
+
+  /* DYNAMIC HIGHLIGHT */
+  .dynamic-strip { background: linear-gradient(90deg, #F5F3FF, #EFF6FF, #F5F3FF); padding: 14px 52px; border-bottom: 1px solid #EEF0F6; display: flex; align-items: center; justify-content: center; gap: 32px; }
+  .ds-item { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: #374151; }
+  .ds-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+  /* FEATURES */
+  .features-strip { display: flex; gap: 0; background: #F8F9FC; border-top: 1px solid #EEF0F6; }
+  .feature-item { flex: 1; padding: 16px 16px; text-align: center; border-right: 1px solid #EEF0F6; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .feature-item:last-child { border-right: none; }
+  .fi-icon { font-size: 16px; }
+  .fi-text { font-size: 11px; font-weight: 600; color: #374151; }
+
+  /* BOTTOM */
+  .bottom-section { display: flex; align-items: stretch; }
+  .stats-bar { display: flex; flex: 1; }
+  .stat-box { flex: 1; padding: 22px 16px; text-align: center; border-right: 1px solid #EEF0F6; position: relative; }
+  .stat-box::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+  .stat-box:nth-child(1)::before { background: #3B82F6; }
+  .stat-box:nth-child(2)::before { background: #F97316; }
+  .stat-box:nth-child(3)::before { background: #10B981; }
+  .stat-box:nth-child(4)::before { background: #6D44E5; }
+  .stat-val { font-family: 'JetBrains Mono', monospace; font-size: 30px; font-weight: 700; color: #111827; }
+  .stat-lbl { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: #9CA3AF; margin-top: 4px; }
+  .cta-box { min-width: 260px; background: linear-gradient(135deg, #FF8800, #FF6B00); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px 28px; gap: 8px; }
+  .cta-text { font-size: 15px; font-weight: 800; color: white; text-align: center; line-height: 1.2; }
+  .cta-btn { background: white; color: #FF6B00; padding: 9px 24px; border-radius: 8px; font-size: 13px; font-weight: 700; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+</style>
+</head>
+<body>
+<div class="page-label">LinkedIn / Instagram Post &mdash; 1200 &times; 1200px &mdash; Marketplace Segment</div>
+
+<div class="flyer">
+  <div class="header">
+    <div class="header-top">
+      <img src="../assets/logos/primary-horizontal-white.svg" alt="SabPaisa" class="logo">
+      <div class="header-badge"><div class="dot"></div>Dynamic Routing</div>
+    </div>
+    <div class="header-text">
+      <h1>Every Order. Every Seller.<br><span>Paid Automatically.</span></h1>
+      <p>Dynamic split routing for multi-vendor marketplaces — seller changes per order, commission auto-deducted.</p>
+    </div>
+  </div>
+
+  <div class="flow-section">
+    <div class="flow-title">Dynamic Account Split &mdash; Different Seller Each Order</div>
+    <div class="flow-diagram">
+      <div class="orders-col">
+        <div class="order-card">
+          <div class="order-icon">&#128187;</div>
+          <div><div class="order-num">Order #1247</div><div class="order-name">Electronics</div><div class="order-amt">&#8377;2,500</div></div>
+        </div>
+        <div class="order-card">
+          <div class="order-icon">&#128090;</div>
+          <div><div class="order-num">Order #1248</div><div class="order-name">Fashion</div><div class="order-amt">&#8377;1,800</div></div>
+        </div>
+        <div class="order-card">
+          <div class="order-icon">&#127822;</div>
+          <div><div class="order-num">Order #1249</div><div class="order-name">Grocery</div><div class="order-amt">&#8377;950</div></div>
+        </div>
+      </div>
+
+      <div class="flow-svg-area">
+        <svg viewBox="0 0 220 340" preserveAspectRatio="xMidYMid meet">
+          <path class="flow-path" stroke="#3B82F6" d="M0,60 C50,60 60,85 110,85 L220,50"/>
+          <path class="flow-path" stroke="#F97316" d="M0,170 C50,170 60,150 110,150 L220,130"/>
+          <path class="flow-path" stroke="#10B981" d="M0,280 C50,280 60,220 110,220 L220,210"/>
+          <path class="flow-path" stroke="#6D44E5" d="M0,170 C70,170 80,290 130,290 L220,290"/>
+          <!-- Animated dots -->
+          <circle r="4" fill="#3B82F6" opacity=".8"><animateMotion dur="2.5s" repeatCount="indefinite" path="M0,60 C50,60 60,85 110,85 L220,50"/></circle>
+          <circle r="4" fill="#F97316" opacity=".8"><animateMotion dur="2.8s" repeatCount="indefinite" path="M0,170 C50,170 60,150 110,150 L220,130" begin="0.3s"/></circle>
+          <circle r="4" fill="#10B981" opacity=".8"><animateMotion dur="3s" repeatCount="indefinite" path="M0,280 C50,280 60,220 110,220 L220,210" begin="0.6s"/></circle>
+          <circle r="4" fill="#6D44E5" opacity=".8"><animateMotion dur="3.5s" repeatCount="indefinite" path="M0,170 C70,170 80,290 130,290 L220,290" begin="0.9s"/></circle>
+          <!-- Engine -->
+          <circle cx="110" cy="170" r="26" fill="white" stroke="#E5E7EB" stroke-width="2"/>
+          <text x="110" y="167" text-anchor="middle" font-size="14">&#9881;</text>
+          <text x="110" y="180" text-anchor="middle" font-size="6" fill="#9CA3AF" font-weight="700" letter-spacing="1" font-family="Inter">SPLIT</text>
+        </svg>
+      </div>
+
+      <div class="results-col">
+        <div class="result-card">
+          <div class="rc-icon">&#128187;</div>
+          <div class="rc-info"><div class="rc-name">Seller A (Electronics)</div><div class="rc-desc">85% &rarr; via UDF per order</div></div>
+          <div><div class="rc-amount">&#8377;2,082</div><div class="rc-tag tag-dynamic">DYNAMIC</div></div>
+        </div>
+        <div class="result-card">
+          <div class="rc-icon">&#128090;</div>
+          <div class="rc-info"><div class="rc-name">Seller B (Fashion)</div><div class="rc-desc">85% &rarr; via UDF per order</div></div>
+          <div><div class="rc-amount">&#8377;1,499</div><div class="rc-tag tag-dynamic">DYNAMIC</div></div>
+        </div>
+        <div class="result-card">
+          <div class="rc-icon">&#127822;</div>
+          <div class="rc-info"><div class="rc-name">Seller C (Grocery)</div><div class="rc-desc">85% &rarr; via UDF per order</div></div>
+          <div><div class="rc-amount">&#8377;791</div><div class="rc-tag tag-dynamic">DYNAMIC</div></div>
+        </div>
+        <div class="result-card">
+          <div class="rc-icon">&#128176;</div>
+          <div class="rc-info"><div class="rc-name">Platform Commission</div><div class="rc-desc">15% from every order</div></div>
+          <div><div class="rc-amount">&#8377;788</div><div class="rc-tag tag-static">STATIC</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="flow-footnote">Each order routes to a different seller &bull; Commission auto-deducted &bull; PG fees prorated</div>
+  </div>
+
+  <div class="dynamic-strip">
+    <div class="ds-item"><div class="ds-dot" style="background:#3B82F6"></div> Order #1 &rarr; Seller A</div>
+    <div class="ds-item"><div class="ds-dot" style="background:#F97316"></div> Order #2 &rarr; Seller B</div>
+    <div class="ds-item"><div class="ds-dot" style="background:#10B981"></div> Order #3 &rarr; Seller C</div>
+    <div class="ds-item" style="color:#6D44E5;font-weight:700;">Account changes per transaction via UDF</div>
+  </div>
+
+  <div class="features-strip">
+    <div class="feature-item"><span class="fi-icon">&#128260;</span><span class="fi-text">Dynamic Routing</span></div>
+    <div class="feature-item"><span class="fi-icon">&#9878;</span><span class="fi-text">Auto Commission</span></div>
+    <div class="feature-item"><span class="fi-icon">&#128179;</span><span class="fi-text">NEFT Tracking</span></div>
+    <div class="feature-item"><span class="fi-icon">&#128274;</span><span class="fi-text">Secure</span></div>
+  </div>
+
+  <div class="bottom-section">
+    <div class="stats-bar">
+      <div class="stat-box"><div class="stat-val">0</div><div class="stat-lbl">Reconciliation</div></div>
+      <div class="stat-box"><div class="stat-val">Dynamic</div><div class="stat-lbl">Seller Routing</div></div>
+      <div class="stat-box"><div class="stat-val">15%</div><div class="stat-lbl">Auto Commission</div></div>
+      <div class="stat-box"><div class="stat-val">T+1</div><div class="stat-lbl">Seller Payout</div></div>
+    </div>
+    <div class="cta-box">
+      <div class="cta-text">Scale your marketplace payouts</div>
+      <div class="cta-btn">Talk to Sales &#8594;</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

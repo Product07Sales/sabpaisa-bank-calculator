@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Split Settlement - Housing Society Flyer | SabPaisa</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: #0a0a0a; display: flex; flex-direction: column; align-items: center; padding: 40px; gap: 24px; }
+  .label { color: #666; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; }
+
+  .flyer {
+    width: 1200px; height: 1200px;
+    background: linear-gradient(150deg, #0A1628 0%, #122448 25%, #1A3A6E 50%, #002E8B 100%);
+    border-radius: 16px; overflow: hidden; position: relative;
+    display: flex; flex-direction: column; color: white;
+  }
+  .flyer::before { content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 700px; height: 400px; background: radial-gradient(circle, rgba(41,189,255,0.08) 0%, transparent 70%); border-radius: 50%; }
+  .flyer::after { content: ''; position: absolute; bottom: -100px; right: -60px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(255,136,0,0.1) 0%, transparent 70%); border-radius: 50%; }
+  .grid-overlay { position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px); background-size: 60px 60px; }
+
+  .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 44px 56px 0; position: relative; z-index: 5; }
+  .logo { height: 36px; }
+  .badge { background: rgba(41,189,255,0.15); border: 1px solid rgba(41,189,255,0.3); color: #7DD3FC; padding: 8px 20px; border-radius: 100px; font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+
+  .headline { padding: 44px 56px 0; position: relative; z-index: 5; }
+  .headline h1 { font-size: 52px; font-weight: 900; line-height: 1.08; letter-spacing: -2px; }
+  .headline h1 .accent { background: linear-gradient(135deg, #FF8800, #FFAC61); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .headline p { font-size: 20px; color: rgba(255,255,255,.5); margin-top: 14px; }
+
+  /* VISUAL */
+  .visual-area { flex: 1; padding: 32px 56px; position: relative; z-index: 5; display: flex; flex-direction: column; gap: 24px; }
+
+  /* SOURCE */
+  .source-row { display: flex; align-items: center; gap: 24px; }
+  .source-card {
+    background: rgba(255,255,255,0.08); backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.12); border-radius: 18px;
+    padding: 24px 32px; display: flex; align-items: center; gap: 20px;
+    flex: 1;
+  }
+  .source-emoji { font-size: 40px; }
+  .source-label { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; opacity: .4; font-weight: 600; }
+  .source-amount { font-family: 'JetBrains Mono', monospace; font-size: 36px; font-weight: 700; background: linear-gradient(135deg, #fff, #29BDFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .source-method { font-size: 11px; opacity: .3; margin-top: 2px; }
+  .arrow-box {
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(255,136,0,0.15); border: 1px solid rgba(255,136,0,0.25);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: #FF8800; min-width: 48px;
+  }
+  .engine-mini {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 12px 20px; text-align: center;
+  }
+  .engine-mini .e-icon { font-size: 20px; }
+  .engine-mini .e-label { font-size: 9px; text-transform: uppercase; letter-spacing: 1px; opacity: .3; margin-top: 2px; }
+
+  /* STACKED BAR */
+  .bar-section { padding: 0; }
+  .bar-label { font-size: 11px; opacity: .3; margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+  .stacked-bar { height: 40px; border-radius: 12px; display: flex; gap: 3px; overflow: hidden; }
+  .stacked-bar span { height: 100%; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+  .bar-maint { background: linear-gradient(135deg, #0B8BFF, #29BDFF); }
+  .bar-sink { background: linear-gradient(135deg, #FF8800, #FFAC61); }
+  .bar-park { background: linear-gradient(135deg, #10B981, #34D399); }
+  .bar-water { background: linear-gradient(135deg, #8B5CF6, #A78BFA); }
+
+  /* 4-FUND CARDS */
+  .funds-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .fund-card {
+    background: rgba(255,255,255,0.06); backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.08); border-radius: 16px;
+    padding: 22px 18px; text-align: center; border-top: 4px solid;
+    transition: all .3s; position: relative; overflow: hidden;
+  }
+  .fund-card:hover { background: rgba(255,255,255,0.1); transform: translateY(-4px); }
+  .fund-card:nth-child(1) { border-top-color: #0B8BFF; }
+  .fund-card:nth-child(2) { border-top-color: #FF8800; }
+  .fund-card:nth-child(3) { border-top-color: #10B981; }
+  .fund-card:nth-child(4) { border-top-color: #8B5CF6; }
+  .fund-emoji { font-size: 28px; margin-bottom: 8px; }
+  .fund-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .fund-amount { font-family: 'JetBrains Mono', monospace; font-size: 22px; font-weight: 700; }
+  .fund-card:nth-child(1) .fund-amount { color: #93C5FD; }
+  .fund-card:nth-child(2) .fund-amount { color: #FFAC61; }
+  .fund-card:nth-child(3) .fund-amount { color: #6EE7B7; }
+  .fund-card:nth-child(4) .fund-amount { color: #C4B5FD; }
+  .fund-pct { font-size: 11px; opacity: .4; margin-top: 2px; font-family: 'JetBrains Mono', monospace; }
+  .fund-tag { font-size: 9px; padding: 2px 8px; border-radius: 100px; background: rgba(255,255,255,0.06); font-weight: 600; opacity: .5; display: inline-block; margin-top: 6px; }
+
+  /* Ring progress mini */
+  .fund-ring { width: 52px; height: 52px; margin: 0 auto 8px; position: relative; }
+  .fund-ring svg { width: 52px; height: 52px; transform: rotate(-90deg); }
+  .fund-ring circle { fill: none; stroke-width: 5; }
+  .ring-bg { stroke: rgba(255,255,255,0.06); }
+  .ring-fill { stroke-linecap: round; }
+  .fund-card:nth-child(1) .ring-fill { stroke: #0B8BFF; }
+  .fund-card:nth-child(2) .ring-fill { stroke: #FF8800; }
+  .fund-card:nth-child(3) .ring-fill { stroke: #10B981; }
+  .fund-card:nth-child(4) .ring-fill { stroke: #8B5CF6; }
+  .ring-pct { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; opacity: .7; }
+
+  .pg-note { text-align: center; font-size: 11px; opacity: .2; padding: 0 56px 4px; position: relative; z-index: 5; }
+
+  .bottom-bar { display: flex; justify-content: space-between; align-items: center; padding: 0 56px 44px; position: relative; z-index: 5; }
+  .stats { display: flex; gap: 36px; }
+  .stat-value { font-family: 'JetBrains Mono', monospace; font-size: 28px; font-weight: 700; color: #FF8800; }
+  .stat-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; opacity: .35; font-weight: 600; margin-top: 2px; }
+  .cta-pill { background: linear-gradient(135deg, #FF8800, #FF6B00); color: white; padding: 14px 32px; border-radius: 100px; font-size: 15px; font-weight: 700; box-shadow: 0 8px 32px rgba(255,136,0,.3); }
+</style>
+</head>
+<body>
+<div class="label">LinkedIn / Instagram &mdash; 1200 x 1200px &mdash; Housing Society Segment</div>
+
+<div class="flyer">
+  <div class="grid-overlay"></div>
+
+  <div class="top-bar">
+    <img src="../assets/logos/primary-horizontal-white.svg" alt="SabPaisa" class="logo">
+    <div class="badge">Multi-Split</div>
+  </div>
+
+  <div class="headline">
+    <h1>One Maintenance Bill.<br><span class="accent">Four Funds Allocated.</span></h1>
+    <p>Automatic fund-wise allocation for housing societies</p>
+  </div>
+
+  <div class="visual-area">
+    <!-- Source -->
+    <div class="source-row">
+      <div class="source-card">
+        <div class="source-emoji">&#127968;</div>
+        <div>
+          <div class="source-label">Resident Pays Monthly</div>
+          <div class="source-amount">&#8377;5,500</div>
+          <div class="source-method">UPI / Net Banking / Auto-debit</div>
+        </div>
+      </div>
+      <div class="arrow-box">&#8594;</div>
+      <div class="engine-mini">
+        <div class="e-icon">&#9881;</div>
+        <div class="e-label">Multi-Split</div>
+      </div>
+    </div>
+
+    <!-- Stacked Bar -->
+    <div class="bar-section">
+      <div class="bar-label">Fund Allocation Breakdown</div>
+      <div class="stacked-bar">
+        <span class="bar-maint" style="width:63.6%">&#8377;3,447</span>
+        <span class="bar-sink" style="width:18.2%">&#8377;985</span>
+        <span class="bar-park" style="width:9.1%"></span>
+        <span class="bar-water" style="width:9.1%"></span>
+      </div>
+    </div>
+
+    <!-- 4 Fund Cards with ring progress -->
+    <div class="funds-grid">
+      <div class="fund-card">
+        <div class="fund-ring">
+          <svg viewBox="0 0 52 52">
+            <circle class="ring-bg" cx="26" cy="26" r="20"/>
+            <circle class="ring-fill" cx="26" cy="26" r="20" stroke-dasharray="79.9 125.66" stroke-dashoffset="0"/>
+          </svg>
+          <div class="ring-pct">63.6%</div>
+        </div>
+        <div class="fund-name">Society Maintenance</div>
+        <div class="fund-amount">&#8377;3,447</div>
+        <div class="fund-tag">STATIC A/C</div>
+      </div>
+      <div class="fund-card">
+        <div class="fund-ring">
+          <svg viewBox="0 0 52 52">
+            <circle class="ring-bg" cx="26" cy="26" r="20"/>
+            <circle class="ring-fill" cx="26" cy="26" r="20" stroke-dasharray="22.9 125.66" stroke-dashoffset="0"/>
+          </svg>
+          <div class="ring-pct">18.2%</div>
+        </div>
+        <div class="fund-name">Sinking Fund</div>
+        <div class="fund-amount">&#8377;985</div>
+        <div class="fund-tag">STATIC A/C</div>
+      </div>
+      <div class="fund-card">
+        <div class="fund-ring">
+          <svg viewBox="0 0 52 52">
+            <circle class="ring-bg" cx="26" cy="26" r="20"/>
+            <circle class="ring-fill" cx="26" cy="26" r="20" stroke-dasharray="11.4 125.66" stroke-dashoffset="0"/>
+          </svg>
+          <div class="ring-pct">9.1%</div>
+        </div>
+        <div class="fund-name">Parking Charges</div>
+        <div class="fund-amount">&#8377;493</div>
+        <div class="fund-tag">STATIC A/C</div>
+      </div>
+      <div class="fund-card">
+        <div class="fund-ring">
+          <svg viewBox="0 0 52 52">
+            <circle class="ring-bg" cx="26" cy="26" r="20"/>
+            <circle class="ring-fill" cx="26" cy="26" r="20" stroke-dasharray="11.4 125.66" stroke-dashoffset="0"/>
+          </svg>
+          <div class="ring-pct">9.1%</div>
+        </div>
+        <div class="fund-name">Water Charges</div>
+        <div class="fund-amount">&#8377;493</div>
+        <div class="fund-tag">STATIC A/C</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pg-note">PG fee &#8377;82.50 prorated &bull; Net &#8377;5,417.50 auto-allocated &bull; AGM-ready audit trail</div>
+
+  <div class="bottom-bar">
+    <div class="stats">
+      <div class="stat-item"><div class="stat-value">4+</div><div class="stat-label">Fund Heads</div></div>
+      <div class="stat-item"><div class="stat-value">0</div><div class="stat-label">Manual Work</div></div>
+      <div class="stat-item"><div class="stat-value">AGM</div><div class="stat-label">Ready Reports</div></div>
+      <div class="stat-item"><div class="stat-value">Monthly</div><div class="stat-label">Auto Settle</div></div>
+    </div>
+    <div class="cta-pill">Get Started &#8594;</div>
+  </div>
+</div>
+</body>
+</html>

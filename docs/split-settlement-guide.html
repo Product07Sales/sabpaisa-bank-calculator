@@ -1,0 +1,2420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Split Settlement — Product Guide | SabPaisa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy-primary: #002E8B;
+            --blue-primary: #006EE6;
+            --blue-sky: #0B8BFF;
+            --blue-light: #29BDFF;
+            --blue-50: #EFF6FF;
+            --blue-100: #DBEAFE;
+            --orange-accent: #FF8800;
+            --orange-soft: #FFAC61;
+            --orange-50: #FFF7ED;
+            --orange-100: #FFEDD5;
+            --white: #FFFFFF;
+            --gray-50: #F9FAFB;
+            --gray-100: #F3F4F6;
+            --gray-200: #E5E7EB;
+            --gray-300: #D1D5DB;
+            --gray-400: #9CA3AF;
+            --gray-500: #6B7280;
+            --gray-600: #4B5563;
+            --gray-700: #374151;
+            --gray-800: #1F2937;
+            --gray-900: #111827;
+            --success: #10B981;
+            --success-50: #ECFDF5;
+            --success-100: #D1FAE5;
+            --error: #EF4444;
+            --purple: #7C3AED;
+            --purple-50: #F5F3FF;
+
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            --radius: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-2xl: 20px;
+
+            --shadow-sm: 0 1px 2px 0 rgba(0, 46, 139, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 46, 139, 0.1), 0 2px 4px -1px rgba(0, 46, 139, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 46, 139, 0.1), 0 4px 6px -2px rgba(0, 46, 139, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 46, 139, 0.1), 0 10px 10px -5px rgba(0, 46, 139, 0.04);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--gray-900);
+            background: var(--gray-50);
+            scroll-behavior: smooth;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 0 32px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: box-shadow 0.3s;
+        }
+
+        .navbar.scrolled {
+            box-shadow: var(--shadow-md);
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .navbar-logo {
+            height: 32px;
+            width: auto;
+        }
+
+        .navbar-divider {
+            width: 1px;
+            height: 24px;
+            background: var(--gray-300);
+        }
+
+        .navbar-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-600);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 4px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 8px 14px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--gray-600);
+            text-decoration: none;
+            border-radius: var(--radius);
+            transition: all 0.2s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--blue-primary);
+            background: var(--blue-50);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            margin-top: 64px;
+            background: linear-gradient(135deg, var(--navy-primary) 0%, #003DB5 50%, var(--blue-primary) 100%);
+            color: white;
+            padding: 80px 32px 100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 136, 0, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(41, 189, 255, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 100px;
+            padding: 8px 20px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 28px;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--orange-accent);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.3); }
+        }
+
+        .hero h1 {
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .hero h1 .highlight {
+            background: linear-gradient(135deg, var(--orange-accent), var(--orange-soft));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 640px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat-value {
+            font-family: var(--font-mono);
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--orange-accent);
+        }
+
+        .hero-stat-label {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 4px;
+        }
+
+        /* ===== MAIN CONTENT ===== */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--blue-primary);
+            margin-bottom: 12px;
+        }
+
+        .section-label::before {
+            content: '';
+            width: 24px;
+            height: 2px;
+            background: var(--orange-accent);
+            border-radius: 2px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+        }
+
+        .section-desc {
+            font-size: 17px;
+            color: var(--gray-500);
+            max-width: 640px;
+            line-height: 1.7;
+            margin-bottom: 48px;
+        }
+
+        /* ===== HOW IT WORKS — DUAL VIEW ===== */
+        .dual-view {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .view-card {
+            background: var(--white);
+            border-radius: var(--radius-xl);
+            padding: 36px;
+            border: 1px solid var(--gray-200);
+            transition: all 0.3s;
+        }
+
+        .view-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .view-card.merchant {
+            border-top: 4px solid var(--blue-primary);
+        }
+
+        .view-card.customer {
+            border-top: 4px solid var(--orange-accent);
+        }
+
+        .view-card-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .merchant .view-card-icon {
+            background: var(--blue-50);
+        }
+
+        .customer .view-card-icon {
+            background: var(--orange-50);
+        }
+
+        .view-card h3 {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .view-card > p {
+            color: var(--gray-500);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .view-steps {
+            list-style: none;
+        }
+
+        .view-steps li {
+            display: flex;
+            gap: 14px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--gray-100);
+            font-size: 14px;
+            color: var(--gray-700);
+        }
+
+        .view-steps li:last-child { border-bottom: none; }
+
+        .step-num {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .merchant .step-num { background: var(--blue-primary); }
+        .customer .step-num { background: var(--orange-accent); }
+
+        /* ===== FEATURES ===== */
+        #features {
+            background: var(--white);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            padding: 32px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:hover {
+            border-color: var(--blue-primary);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 20px;
+            background: var(--blue-50);
+        }
+
+        .feature-card:nth-child(2) .feature-icon { background: var(--orange-50); }
+        .feature-card:nth-child(3) .feature-icon { background: var(--success-50); }
+        .feature-card:nth-child(4) .feature-icon { background: var(--purple-50); }
+        .feature-card:nth-child(5) .feature-icon { background: var(--blue-50); }
+
+        .feature-card h4 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--gray-900);
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--gray-500);
+            line-height: 1.6;
+        }
+
+        /* ===== PRORATION EXAMPLE ===== */
+        .proration-demo {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            margin-top: 32px;
+            grid-column: 1 / -1;
+        }
+
+        .proration-header {
+            background: linear-gradient(135deg, var(--navy-primary), var(--blue-primary));
+            color: white;
+            padding: 24px 32px;
+        }
+
+        .proration-header h4 {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .proration-header p {
+            font-size: 13px;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
+        .proration-body {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 0;
+        }
+
+        .proration-side {
+            padding: 28px 32px;
+        }
+
+        .proration-side h5 {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .proration-side.before h5 { color: var(--error); }
+        .proration-side.after h5 { color: var(--success); }
+
+        .proration-divider {
+            width: 1px;
+            background: var(--gray-200);
+            position: relative;
+        }
+
+        .proration-divider::after {
+            content: 'VS';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--gray-100);
+            padding: 8px;
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--gray-500);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .proration-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            font-size: 14px;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .proration-row:last-child { border-bottom: none; }
+
+        .proration-row .label { color: var(--gray-600); }
+
+        .proration-row .amount {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .proration-row.total {
+            border-top: 2px solid var(--gray-200);
+            border-bottom: none;
+            margin-top: 8px;
+            padding-top: 14px;
+            font-weight: 700;
+        }
+
+        .proration-row.total .amount.error { color: var(--error); }
+        .proration-row.total .amount.success { color: var(--success); }
+
+        .proration-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 10px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .proration-badge.error {
+            background: #FEF2F2;
+            color: var(--error);
+        }
+
+        .proration-badge.success {
+            background: var(--success-50);
+            color: var(--success);
+        }
+
+        /* ===== SPLIT TYPES ===== */
+        .split-types-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .split-type-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .split-type-card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+
+        .split-type-top {
+            display: flex;
+            align-items: stretch;
+        }
+
+        .split-type-number {
+            width: 72px;
+            min-width: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .split-type-card:nth-child(1) .split-type-number { background: var(--blue-primary); }
+        .split-type-card:nth-child(2) .split-type-number { background: var(--orange-accent); }
+        .split-type-card:nth-child(3) .split-type-number { background: var(--purple); }
+        .split-type-card:nth-child(4) .split-type-number { background: var(--success); }
+        .split-type-card:nth-child(5) .split-type-number { background: var(--gray-500); }
+
+        .split-type-info {
+            flex: 1;
+            padding: 24px 28px;
+        }
+
+        .split-type-info h4 {
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .split-type-info p {
+            font-size: 14px;
+            color: var(--gray-500);
+            line-height: 1.6;
+        }
+
+        .split-type-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .split-type-card:nth-child(1) .split-type-badge { background: var(--blue-50); color: var(--blue-primary); }
+        .split-type-card:nth-child(2) .split-type-badge { background: var(--orange-50); color: var(--orange-accent); }
+        .split-type-card:nth-child(3) .split-type-badge { background: var(--purple-50); color: var(--purple); }
+        .split-type-card:nth-child(4) .split-type-badge { background: var(--success-50); color: var(--success); }
+        .split-type-card:nth-child(5) .split-type-badge { background: var(--gray-100); color: var(--gray-500); }
+
+        .split-type-visual {
+            display: flex;
+            align-items: center;
+            padding: 20px 28px;
+            margin: 0 28px 24px;
+            background: var(--gray-50);
+            border-radius: var(--radius-lg);
+            gap: 16px;
+            font-size: 13px;
+        }
+
+        .split-flow-source {
+            background: var(--white);
+            border: 2px solid var(--gray-300);
+            border-radius: var(--radius);
+            padding: 10px 16px;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .split-flow-source .amount {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--gray-900);
+        }
+
+        .split-flow-source .label {
+            font-size: 11px;
+            color: var(--gray-500);
+            margin-top: 2px;
+        }
+
+        .split-flow-arrow {
+            color: var(--gray-400);
+            font-size: 20px;
+            min-width: 32px;
+            text-align: center;
+        }
+
+        .split-flow-targets {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .split-flow-target {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 8px 14px;
+            border-left: 3px solid;
+        }
+
+        .split-flow-target:nth-child(1) { border-color: var(--blue-primary); }
+        .split-flow-target:nth-child(2) { border-color: var(--orange-accent); }
+        .split-flow-target:nth-child(3) { border-color: var(--success); }
+        .split-flow-target:nth-child(4) { border-color: var(--purple); }
+
+        .split-flow-target .name {
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        .split-flow-target .amount {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .split-flow-target .tag {
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 100px;
+            background: var(--gray-100);
+            color: var(--gray-500);
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        /* ===== SEGMENTS ===== */
+        .segments-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 28px;
+        }
+
+        .segment-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .segment-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-3px);
+        }
+
+        .segment-card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .segment-header {
+            padding: 28px 28px 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .segment-icon {
+            width: 52px;
+            height: 52px;
+            min-width: 52px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .segment-card:nth-child(1) .segment-icon { background: var(--blue-50); }
+        .segment-card:nth-child(2) .segment-icon { background: var(--orange-50); }
+        .segment-card:nth-child(3) .segment-icon { background: #FEF2F2; }
+        .segment-card:nth-child(4) .segment-icon { background: var(--purple-50); }
+        .segment-card:nth-child(5) .segment-icon { background: var(--success-50); }
+        .segment-card:nth-child(6) .segment-icon { background: var(--blue-50); }
+
+        .segment-header-text h4 {
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .segment-header-text p {
+            font-size: 13px;
+            color: var(--gray-500);
+            line-height: 1.5;
+        }
+
+        .segment-split-type {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            background: var(--blue-50);
+            color: var(--blue-primary);
+            margin-top: 8px;
+        }
+
+        .segment-body {
+            padding: 20px 28px 28px;
+        }
+
+        .segment-scenario {
+            background: var(--gray-50);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            margin-bottom: 16px;
+        }
+
+        .segment-scenario-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .segment-scenario p {
+            font-size: 14px;
+            color: var(--gray-700);
+            line-height: 1.5;
+        }
+
+        .segment-split-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .segment-split-table thead {
+            background: var(--gray-50);
+        }
+
+        .segment-split-table th {
+            padding: 10px 14px;
+            text-align: left;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--gray-500);
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .segment-split-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--gray-100);
+            color: var(--gray-700);
+        }
+
+        .segment-split-table tr:last-child td { border-bottom: none; }
+
+        .segment-split-table .amount-cell {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--gray-900);
+        }
+
+        .segment-split-table .account-tag {
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 100px;
+            font-weight: 600;
+        }
+
+        .account-tag.static { background: var(--blue-50); color: var(--blue-primary); }
+        .account-tag.dynamic { background: var(--orange-50); color: var(--orange-accent); }
+
+        .segment-totals {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .segment-total-item {
+            flex: 1;
+            background: var(--gray-50);
+            border-radius: var(--radius);
+            padding: 12px 16px;
+            text-align: center;
+        }
+
+        .segment-total-item .label {
+            font-size: 11px;
+            color: var(--gray-500);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .segment-total-item .value {
+            font-family: var(--font-mono);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-top: 4px;
+        }
+
+        .segment-benefits {
+            margin-top: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .segment-benefit {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+
+        .segment-benefit .check {
+            color: var(--success);
+            font-weight: 700;
+            min-width: 18px;
+        }
+
+        /* ===== SETTLEMENT FLOW ===== */
+        #flow {
+            background: var(--white);
+        }
+
+        .flow-visual {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            margin-top: 48px;
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .flow-step-connector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 48px;
+            min-width: 48px;
+        }
+
+        .flow-step-dot {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            background: var(--white);
+            border: 3px solid var(--blue-primary);
+            position: relative;
+            z-index: 2;
+        }
+
+        .flow-step.highlight .flow-step-dot {
+            background: var(--blue-primary);
+            border-color: var(--blue-primary);
+        }
+
+        .flow-step-line {
+            width: 3px;
+            height: 28px;
+            background: var(--gray-200);
+        }
+
+        .flow-step-content {
+            flex: 1;
+            background: var(--gray-50);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            padding: 18px 24px;
+        }
+
+        .flow-step.highlight .flow-step-content {
+            background: var(--blue-50);
+            border-color: var(--blue-primary);
+        }
+
+        .flow-step-content h5 {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 4px;
+        }
+
+        .flow-step-content p {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+
+        .flow-split-branches {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+            width: 100%;
+            max-width: 700px;
+            padding-left: 68px;
+        }
+
+        .flow-branch {
+            flex: 1;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius);
+            padding: 14px 16px;
+            text-align: center;
+            border-top: 3px solid;
+        }
+
+        .flow-branch:nth-child(1) { border-top-color: var(--blue-primary); }
+        .flow-branch:nth-child(2) { border-top-color: var(--orange-accent); }
+        .flow-branch:nth-child(3) { border-top-color: var(--success); }
+
+        .flow-branch .name {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gray-700);
+        }
+
+        .flow-branch .amount {
+            font-family: var(--font-mono);
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-top: 4px;
+        }
+
+        /* ===== REPORTING ===== */
+        .reporting-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .reporting-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-xl);
+            padding: 32px;
+        }
+
+        .reporting-card h4 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .reporting-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .reporting-list li {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            font-size: 14px;
+            color: var(--gray-600);
+        }
+
+        .reporting-list li strong {
+            color: var(--gray-900);
+            font-weight: 600;
+        }
+
+        .report-icon {
+            width: 32px;
+            height: 32px;
+            min-width: 32px;
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            background: var(--gray-100);
+        }
+
+        /* ===== SETUP ===== */
+        #setup {
+            background: var(--white);
+        }
+
+        .setup-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .setup-requirements {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .setup-req {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            padding: 16px;
+            background: var(--gray-50);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--gray-200);
+        }
+
+        .setup-req-num {
+            width: 28px;
+            height: 28px;
+            min-width: 28px;
+            border-radius: 50%;
+            background: var(--blue-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .setup-req h5 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 2px;
+        }
+
+        .setup-req p {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+
+        .setup-timeline {
+            background: linear-gradient(135deg, var(--navy-primary), var(--blue-primary));
+            border-radius: var(--radius-xl);
+            padding: 36px;
+            color: white;
+        }
+
+        .setup-timeline h4 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 28px;
+        }
+
+        .timeline-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .timeline-step {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }
+
+        .timeline-dot-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .timeline-dot {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .timeline-step.active .timeline-dot {
+            background: var(--orange-accent);
+            border-color: var(--orange-accent);
+        }
+
+        .timeline-line {
+            width: 2px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .timeline-text {
+            padding-top: 6px;
+            padding-bottom: 24px;
+        }
+
+        .timeline-text h5 {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .timeline-text p {
+            font-size: 13px;
+            opacity: 0.7;
+        }
+
+        .setup-note {
+            margin-top: 24px;
+            padding: 16px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-lg);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .setup-note strong {
+            color: var(--orange-accent);
+        }
+
+        /* ===== FAQ ===== */
+        .faq-list {
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .faq-item {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--blue-primary);
+        }
+
+        .faq-question {
+            padding: 20px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--gray-900);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+
+        .faq-question::after {
+            content: '+';
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--gray-400);
+            transition: transform 0.3s;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .faq-item.open .faq-question::after {
+            content: '\2212';
+            color: var(--blue-primary);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 200px;
+        }
+
+        .faq-answer p {
+            padding: 0 24px 20px;
+            font-size: 14px;
+            color: var(--gray-600);
+            line-height: 1.7;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--navy-primary);
+            color: white;
+            padding: 48px 32px;
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: 14px;
+            opacity: 0.6;
+        }
+
+        .footer-line {
+            width: 60px;
+            height: 3px;
+            background: var(--orange-accent);
+            border-radius: 2px;
+            margin: 20px auto;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 40px; }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .segments-grid { grid-template-columns: 1fr; }
+            .setup-content { grid-template-columns: 1fr; }
+            .reporting-grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            .hero { padding: 60px 20px 80px; }
+            .hero h1 { font-size: 32px; }
+            .hero-stats { flex-direction: column; gap: 24px; }
+            .dual-view { grid-template-columns: 1fr; }
+            .features-grid { grid-template-columns: 1fr; }
+            .proration-body { grid-template-columns: 1fr; }
+            .proration-divider { width: 100%; height: 1px; }
+            .container { padding: 0 16px; }
+            section { padding: 48px 0; }
+            .flow-split-branches { flex-direction: column; padding-left: 0; }
+        }
+
+        /* ===== SCROLL ANIMATION ===== */
+        .animate-in {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar" id="navbar">
+        <a href="#" class="navbar-brand">
+            <img src="assets/logos/primary-horizontal-color.svg" alt="SabPaisa" class="navbar-logo">
+            <div class="navbar-divider"></div>
+            <div class="navbar-title">Split Settlement</div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#split-types">Split Types</a></li>
+            <li><a href="#segments">Segments</a></li>
+            <li><a href="#flow">Settlement Flow</a></li>
+            <li><a href="#setup">Setup</a></li>
+            <li><a href="#faq">FAQ</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <img src="assets/logos/primary-horizontal-white.svg" alt="SabPaisa" style="height: 40px; margin-bottom: 28px; opacity: 0.9;">
+            <div class="hero-badge">
+                <div class="hero-badge-dot"></div>
+                SettlePaisa Product
+            </div>
+            <h1>One Payment In.<br><span class="highlight">Multiple Payouts Out.</span></h1>
+            <p class="hero-subtitle">
+                Split Settlement automatically distributes a single payment to multiple parties.
+                No manual transfers. No reconciliation. Fully automated.
+            </p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-value">5</div>
+                    <div class="hero-stat-label">Split Modes</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">6+</div>
+                    <div class="hero-stat-label">Industry Segments</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">0</div>
+                    <div class="hero-stat-label">Manual Reconciliation</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">100%</div>
+                    <div class="hero-stat-label">Automated</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how-it-works">
+        <div class="container">
+            <div class="section-label">How It Works</div>
+            <h2 class="section-title">Two Perspectives. One Seamless Experience.</h2>
+            <p class="section-desc">
+                Split Settlement works differently for merchants and customers — but both get a frictionless experience.
+            </p>
+
+            <div class="dual-view">
+                <!-- Merchant View -->
+                <div class="view-card merchant animate-in">
+                    <div class="view-card-icon">&#127970;</div>
+                    <h3>For the Merchant</h3>
+                    <p>Automated splitting replaces manual reconciliation and bank transfers</p>
+                    <ul class="view-steps">
+                        <li>
+                            <span class="step-num">1</span>
+                            <span><strong>One-time setup</strong> &mdash; Ops team configures your split rules on the dashboard</span>
+                        </li>
+                        <li>
+                            <span class="step-num">2</span>
+                            <span><strong>Automatic processing</strong> &mdash; Every settlement is split per your configured rules</span>
+                        </li>
+                        <li>
+                            <span class="step-num">3</span>
+                            <span><strong>Transparent reporting</strong> &mdash; Full visibility into how each payment was split</span>
+                        </li>
+                        <li>
+                            <span class="step-num">4</span>
+                            <span><strong>NEFT tracking</strong> &mdash; Track every transfer from queued to confirmed</span>
+                        </li>
+                        <li>
+                            <span class="step-num">5</span>
+                            <span><strong>Zero integration changes</strong> &mdash; Works with your existing payment setup</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Customer View -->
+                <div class="view-card customer animate-in">
+                    <div class="view-card-icon">&#128100;</div>
+                    <h3>For the Customer</h3>
+                    <p>Nothing changes. The customer pays a single amount — the split happens behind the scenes.</p>
+                    <ul class="view-steps">
+                        <li>
+                            <span class="step-num">1</span>
+                            <span><strong>Sees single amount</strong> &mdash; e.g., Rs 10,000 as total admission fee</span>
+                        </li>
+                        <li>
+                            <span class="step-num">2</span>
+                            <span><strong>Pays via any method</strong> &mdash; UPI, Net Banking, Cards, Wallets</span>
+                        </li>
+                        <li>
+                            <span class="step-num">3</span>
+                            <span><strong>Gets confirmation</strong> &mdash; Single receipt for the full payment</span>
+                        </li>
+                        <li>
+                            <span class="step-num">4</span>
+                            <span><strong>Split is invisible</strong> &mdash; Distribution happens entirely on the backend</span>
+                        </li>
+                        <li>
+                            <span class="step-num">5</span>
+                            <span><strong>Seamless experience</strong> &mdash; No extra steps, no confusion</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section id="features">
+        <div class="container">
+            <div class="section-label">Key Features</div>
+            <h2 class="section-title">Built for Real-World Complexity</h2>
+            <p class="section-desc">
+                Every feature is designed to handle the nuances of multi-party payment distribution.
+            </p>
+
+            <div class="features-grid">
+                <div class="feature-card animate-in">
+                    <div class="feature-icon">&#9878;</div>
+                    <h4>Automatic Fee Proration</h4>
+                    <p>PG fees are distributed proportionally across all beneficiaries. No shortfalls, no manual adjustment.</p>
+                </div>
+                <div class="feature-card animate-in">
+                    <div class="feature-icon">&#128179;</div>
+                    <h4>Flexible Accounts</h4>
+                    <p>Static, dynamic, or hybrid — configure beneficiary bank details once or pass them per transaction.</p>
+                </div>
+                <div class="feature-card animate-in">
+                    <div class="feature-icon">&#128200;</div>
+                    <h4>Remainder Handling</h4>
+                    <p>Primary beneficiary receives the remainder. Every rupee accounted for — no rounding gaps.</p>
+                </div>
+                <div class="feature-card animate-in">
+                    <div class="feature-icon">&#128269;</div>
+                    <h4>NEFT Transfer Tracking</h4>
+                    <p>Full lifecycle tracking from split calculation to bank confirmation. Failed transfers flagged instantly.</p>
+                </div>
+                <div class="feature-card animate-in">
+                    <div class="feature-icon">&#128101;</div>
+                    <h4>Multi-Beneficiary</h4>
+                    <p>No limit on number of beneficiaries. Configure priority ordering and custom amount rules for each.</p>
+                </div>
+            </div>
+
+            <!-- Proration Demo -->
+            <div class="proration-demo animate-in">
+                <div class="proration-header">
+                    <h4>Fee Proration in Action</h4>
+                    <p>See how automatic proration prevents settlement shortfalls</p>
+                </div>
+                <div class="proration-body">
+                    <div class="proration-side before">
+                        <h5>Without Proration</h5>
+                        <div class="proration-row">
+                            <span class="label">Customer pays</span>
+                            <span class="amount">Rs 1,000</span>
+                        </div>
+                        <div class="proration-row">
+                            <span class="label">PG fees</span>
+                            <span class="amount">- Rs 20</span>
+                        </div>
+                        <div class="proration-row">
+                            <span class="label">Net available</span>
+                            <span class="amount">Rs 980</span>
+                        </div>
+                        <div style="height: 12px"></div>
+                        <div class="proration-row">
+                            <span class="label">Party A gets</span>
+                            <span class="amount">Rs 600</span>
+                        </div>
+                        <div class="proration-row">
+                            <span class="label">Party B gets</span>
+                            <span class="amount">Rs 400</span>
+                        </div>
+                        <div class="proration-row total">
+                            <span class="label">Total needed</span>
+                            <span class="amount error">Rs 1,000</span>
+                        </div>
+                        <div style="text-align:center; margin-top:12px;">
+                            <span class="proration-badge error">Shortfall of Rs 20</span>
+                        </div>
+                    </div>
+                    <div class="proration-divider"></div>
+                    <div class="proration-side after">
+                        <h5>With Proration</h5>
+                        <div class="proration-row">
+                            <span class="label">Customer pays</span>
+                            <span class="amount">Rs 1,000</span>
+                        </div>
+                        <div class="proration-row">
+                            <span class="label">PG fees</span>
+                            <span class="amount">- Rs 20</span>
+                        </div>
+                        <div class="proration-row">
+                            <span class="label">Net available</span>
+                            <span class="amount">Rs 980</span>
+                        </div>
+                        <div style="height: 12px"></div>
+                        <div class="proration-row">
+                            <span class="label">Party A gets (60%)</span>
+                            <span class="amount">Rs 588</span>
+                        </div>
+                        <div class="proration-row">
+                            <span class="label">Party B gets (40%)</span>
+                            <span class="amount">Rs 392</span>
+                        </div>
+                        <div class="proration-row total">
+                            <span class="label">Total distributed</span>
+                            <span class="amount success">Rs 980</span>
+                        </div>
+                        <div style="text-align:center; margin-top:12px;">
+                            <span class="proration-badge success">Perfectly balanced</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SPLIT TYPES -->
+    <section id="split-types">
+        <div class="container">
+            <div class="section-label">Split Types</div>
+            <h2 class="section-title">Five Modes for Every Business Need</h2>
+            <p class="section-desc">
+                From simple fixed splits to fully dynamic multi-party distributions.
+            </p>
+
+            <div class="split-types-grid">
+                <!-- Type 1: Fixed Split -->
+                <div class="split-type-card animate-in">
+                    <div class="split-type-top">
+                        <div class="split-type-number">01</div>
+                        <div class="split-type-info">
+                            <h4>Fixed Split</h4>
+                            <p>Each payment is split into predefined categories with amounts specified per transaction. Split rules are configured once and applied consistently.</p>
+                            <span class="split-type-badge">Best for: Education, Fee Portals</span>
+                        </div>
+                    </div>
+                    <div class="split-type-visual">
+                        <div class="split-flow-source">
+                            <div class="amount">Rs 10,000</div>
+                            <div class="label">College Fee</div>
+                        </div>
+                        <div class="split-flow-arrow">&rarr;</div>
+                        <div class="split-flow-targets">
+                            <div class="split-flow-target">
+                                <span class="name">College</span>
+                                <span><span class="amount">Rs 8,000</span><span class="tag">STATIC</span></span>
+                            </div>
+                            <div class="split-flow-target">
+                                <span class="name">University</span>
+                                <span><span class="amount">Rs 1,500</span><span class="tag">STATIC</span></span>
+                            </div>
+                            <div class="split-flow-target">
+                                <span class="name">Platform</span>
+                                <span><span class="amount">Rs 500</span><span class="tag">STATIC</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Type 2: Dynamic Account -->
+                <div class="split-type-card animate-in">
+                    <div class="split-type-top">
+                        <div class="split-type-number">02</div>
+                        <div class="split-type-info">
+                            <h4>Dynamic Account</h4>
+                            <p>The full payment amount is routed to a different bank account per transaction, specified at payment time. Each order can go to a different seller.</p>
+                            <span class="split-type-badge">Best for: Marketplaces, Multi-vendor</span>
+                        </div>
+                    </div>
+                    <div class="split-type-visual">
+                        <div class="split-flow-source">
+                            <div class="amount">Rs 5,000</div>
+                            <div class="label">Order #1247</div>
+                        </div>
+                        <div class="split-flow-arrow">&rarr;</div>
+                        <div class="split-flow-targets">
+                            <div class="split-flow-target">
+                                <span class="name">Seller A (via UDF)</span>
+                                <span><span class="amount">Rs 4,250</span><span class="tag">DYNAMIC</span></span>
+                            </div>
+                            <div class="split-flow-target">
+                                <span class="name">Platform Commission</span>
+                                <span><span class="amount">Rs 750</span><span class="tag">STATIC</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Type 3: Institute-Based -->
+                <div class="split-type-card animate-in">
+                    <div class="split-type-top">
+                        <div class="split-type-number">03</div>
+                        <div class="split-type-info">
+                            <h4>Institute-Based Split</h4>
+                            <p>Both the recipient details (account, bank) AND the amounts are specified per transaction. Maximum flexibility for varying recipients.</p>
+                            <span class="split-type-badge">Best for: Government, Institutional</span>
+                        </div>
+                    </div>
+                    <div class="split-type-visual">
+                        <div class="split-flow-source">
+                            <div class="amount">Rs 5,000</div>
+                            <div class="label">Govt Fee</div>
+                        </div>
+                        <div class="split-flow-arrow">&rarr;</div>
+                        <div class="split-flow-targets">
+                            <div class="split-flow-target">
+                                <span class="name">Transport Dept</span>
+                                <span><span class="amount">Rs 3,000</span><span class="tag">DYNAMIC</span></span>
+                            </div>
+                            <div class="split-flow-target">
+                                <span class="name">State Treasury</span>
+                                <span><span class="amount">Rs 2,000</span><span class="tag">DYNAMIC</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Type 4: Multi-Split -->
+                <div class="split-type-card animate-in">
+                    <div class="split-type-top">
+                        <div class="split-type-number">04</div>
+                        <div class="split-type-info">
+                            <h4>Multi-Split</h4>
+                            <p>Multiple recipients and amounts encoded in a compact format. Allows many splits from a single payment with full flexibility.</p>
+                            <span class="split-type-badge">Best for: Consortium, Syndicate</span>
+                        </div>
+                    </div>
+                    <div class="split-type-visual">
+                        <div class="split-flow-source">
+                            <div class="amount">Rs 15,000</div>
+                            <div class="label">Consortium</div>
+                        </div>
+                        <div class="split-flow-arrow">&rarr;</div>
+                        <div class="split-flow-targets">
+                            <div class="split-flow-target">
+                                <span class="name">Partner A</span>
+                                <span class="amount">Rs 6,000</span>
+                            </div>
+                            <div class="split-flow-target">
+                                <span class="name">Partner B</span>
+                                <span class="amount">Rs 4,000</span>
+                            </div>
+                            <div class="split-flow-target">
+                                <span class="name">Partner C</span>
+                                <span class="amount">Rs 3,000</span>
+                            </div>
+                            <div class="split-flow-target">
+                                <span class="name">Platform</span>
+                                <span class="amount">Rs 2,000</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Type 5: No Split -->
+                <div class="split-type-card animate-in">
+                    <div class="split-type-top">
+                        <div class="split-type-number">05</div>
+                        <div class="split-type-info">
+                            <h4>No Split (Default)</h4>
+                            <p>Standard single-beneficiary settlement. The full net amount goes to the merchant's registered bank account. No configuration needed.</p>
+                            <span class="split-type-badge">Default for all merchants</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEGMENT USE CASES -->
+    <section id="segments">
+        <div class="container">
+            <div class="section-label">Segment Use Cases</div>
+            <h2 class="section-title">Split Settlement Across Industries</h2>
+            <p class="section-desc">
+                Real-world examples showing how split settlement works for each industry segment with actual payment breakdowns.
+            </p>
+
+            <div class="segments-grid">
+
+                <!-- Education -->
+                <div class="segment-card animate-in">
+                    <div class="segment-header">
+                        <div class="segment-icon">&#127891;</div>
+                        <div class="segment-header-text">
+                            <h4>Education</h4>
+                            <p>College admission fee split across institution, university, exam board, and hostel</p>
+                            <span class="segment-split-type">Fixed Split</span>
+                        </div>
+                    </div>
+                    <div class="segment-body">
+                        <div class="segment-scenario">
+                            <div class="segment-scenario-title">Scenario</div>
+                            <p>A student pays <strong>Rs 50,000</strong> as admission fees. PG fee @ 1.5% = Rs 750. Net = Rs 49,250.</p>
+                        </div>
+                        <table class="segment-split-table">
+                            <thead>
+                                <tr>
+                                    <th>Beneficiary</th>
+                                    <th>Intended</th>
+                                    <th>Prorated</th>
+                                    <th>Account</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>College (Tuition)</td>
+                                    <td class="amount-cell">Rs 30,000</td>
+                                    <td class="amount-cell">Rs 29,550</td>
+                                    <td><span class="account-tag static">Static</span></td>
+                                </tr>
+                                <tr>
+                                    <td>University</td>
+                                    <td class="amount-cell">Rs 10,000</td>
+                                    <td class="amount-cell">Rs 9,850</td>
+                                    <td><span class="account-tag static">Static</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Exam Board</td>
+                                    <td class="amount-cell">Rs 5,000</td>
+                                    <td class="amount-cell">Rs 4,925</td>
+                                    <td><span class="account-tag static">Static</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Hostel</td>
+                                    <td class="amount-cell">Rs 5,000</td>
+                                    <td class="amount-cell">Rs 4,925</td>
+                                    <td><span class="account-tag static">Static</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="segment-benefits">
+                            <div class="segment-benefit"><span class="check">&#10003;</span> No manual transfers to university or exam board</div>
+                            <div class="segment-benefit"><span class="check">&#10003;</span> Partners receive share in the same settlement cycle</div>
+                            <div class="segment-benefit"><span class="check">&#10003;</span> Full audit trail for compliance</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Marketplace -->
+                <div class="segment-card animate-in">
+                    <div class="segment-header">
+                        <div class="segment-icon">&#128722;</div>
+                        <div class="segment-header-text">
+                            <h4>Marketplace / E-Commerce</h4>
+                            <p>Order payment split between seller and platform commission</p>
+                            <span class="segment-split-type">Dynamic Account</span>
+                        </div>
+                    </div>
+                    <div class="segment-body">
+                        <div class="segment-scenario">
+                            <div class="segment-scenario-title">Scenario</div>
+                            <p>Customer buys a product for <strong>Rs 2,500</strong>. Platform charges 15% commission. PG fee @ 2% = Rs 50. Net = Rs 2,450.</p>
+                        </div>
+                        <table class="segment-split-table">
+                            <thead>
+                                <tr>
+                                    <th>Beneficiary</th>
+                                    <th>Intended</th>
+                                    <th>Prorated</th>
+                                    <th>Account</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Seller (Vendor X)</td>
+                                    <td class="amount-cell">Rs 2,125</td>
+                                    <td class="amount-cell">Rs 2,082</td>
+                                    <td><span class="account-tag dynamic">Dynamic</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Platform Commission</td>
+                                    <td class="amount-cell">Rs 375</td>
+                                    <td class="amount-cell">Rs 368</td>
+                                    <td><span class="account-tag static">Static</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="segment-benefits">
+                            <div class="segment-benefit"><span class="check">&#10003;</span> Sellers receive payment directly, no waiting</div>
+                            <div class="segment-benefit"><span class="check">&#10003;</span> Commission automatically deducted and routed</div>
+                            <div class="segment-benefit"><span class="check">&#10003;</span> Each order routes to a different seller dynamically</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Government -->
+                <div class="segment-card animate-in">
+                    <div class="segment-header">
+                        <div class="segment-icon">&#127963;</div>
+                        <div class="segment-header-text">
+                            <h4>Government / Challan</h4>
+                            <p>Challan fee split across transport department, state treasury, and convenience fee</p>
+                            <span class="segment-split-type">Institute-Based Split</span>
+                        </div>
+                    </div>
+                    <div class="segment-body">
+                        <div class="segment-scenario">
+                            <div class="segment-scenario-title">Scenario</div>
+                            <p>Citizen pays <strong>Rs 1,200</strong> as challan fee. PG fee @ 1% = Rs 12. Net = Rs 1,188.</p>
+                        </div>
+                        <table class="segment-split-table">
+                            <thead>
+                                <tr>
+                                    <th>Beneficiary</th>
+                                    <th>Intended</th>
+                                    <th>Prorated</th>
+                                    <th>Account</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Transport Dept</td>
+                                    <td class="amount-cell">Rs 800</td>
+                                    <td class="amount-cell">Rs 792</td>
+                                    <td><span class="account-tag dynamic">Dynamic</span></td>
+                                </tr>
+                                <tr>
+                                    <td>State Treasury</td>
+                                    <td class="amount-cell">Rs 350</td>
+                                    <td class="amount-cell">Rs 347</td>
+                                    <td><span class="account-tag dynamic">Dynamic</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Portal Convenience</td>
+                                    <td class="amount-cell">Rs 50</td>
+                                    <td class="amount-cell">Rs 49</td>
+                                    <td><span class="account-tag static">Static</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="segment-benefits">
+                            <div class="segment-benefit"><span class="check">&#10003;</span> Multiple departments receive share automatically</div>
+                            <div class="segment-benefit"><span class="check">&#10003;</span> Different challan types route dynamically</div>
+                            <div class="segment-benefit"><span class="check">&#10003;</span> Transparent audit trail for compliance</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Aggregator -->
+                <div class="segment-card animate-in">
+                    <div class="segment-header">
+                        <div class="segment-icon">&#128736;</div>
+                        <div class="segment-header-text">
+                            <h4>Aggregator / Service Platform</h4>
+                            <p>Service booking split between provider, platform commission, and insurance pool</p>
+                            <span class="segment-split-type">Dynamic Account</span>
+                        </div>
+                    </div>
+                    <div class="segment-body">
+                        <div class="segment-scenario">
+                            <div class="segment-scenario-title">Scenario</div>
+                            <p>Customer books plumbing service for <strong>Rs 800</strong>. Platform takes 20% + insurance. PG fee @ 2% = Rs 16. Net = Rs 784.</p>
+                        </div>
+                        <table class="segment-split-table">
+                            <thead>
+                                <tr>
+                                    <th>Beneficiary</th>
+                                    <th>Intended</th>
+                                    <th>Prorated</th>
+                                    <th>Account</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Service Provider</td>
+                                    <td class="amount-cell">Rs 610</td>
+                                    <td class="amount-cell">Rs 598</td>
+                                    <td><span class="account-tag dynamic">Dynamic</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Platform Commission</td>
+                                    <td class="amount-cell">Rs 160</td>
+                                    <td class="amount-cell">Rs 157</td>
+                                    <td><span class="account-tag static">Static</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Insurance Pool</td>
+                                    <td class="amount-cell">Rs 30</td>
+                                    <td class="amount-cell">Rs 29</td>
+                                    <td><span class="account-tag static">Static</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="segment-benefits">
+                            <div class="segment-benefit"><span class="check">&#10003;</span> Providers paid in same settlement cycle</div>
+                            <div class="segment-benefit"><span class="check">&#10003;</span> Commission and insurance deductions automated</div>
+                            <div class="segment-benefit"><span class="check">&#10003;</span> Each booking routes to different provider</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Franchise -->
+                <div class="segment-card animate-in">
+                    <div class="segment-header">
+                        <div class="segment-icon">&#127975;</div>
+                        <div class="segment-header-text">
+                            <h4>Franchise Model</h4>
+                            <p>Revenue share between franchisor (30%) and franchisee (70%)</p>
+                            <span class="segment-split-type">Fixed Split</span>
+                        </div>
+                    </div>
+                    <div class="segment-body">
+                        <div class="segment-scenario">
+                            <div class="segment-scenario-title">Scenario</div>
+                            <p>Customer pays <strong>Rs 3,000</strong> at franchise outlet. PG fee @ 1.8% = Rs 54. Net = Rs 2,946.</p>
+                        </div>
+                        <table class="segment-split-table">
+                            <thead>
+                                <tr>
+                                    <th>Beneficiary</th>
+                                    <th>Intended</th>
+                                    <th>Prorated</th>
+                                    <th>Account</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Franchisee (Outlet)</td>
+                                    <td class="amount-cell">Rs 2,100</td>
+                                    <td class="amount-cell">Rs 2,062</td>
+                                    <td><span class="account-tag static">Static</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Franchisor (HQ)</td>
+                                    <td class="amount-cell">Rs 900</td>
+                                    <td class="amount-cell">Rs 884</td>
+                                    <td><span class="account-tag static">Static</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="segment-benefits">
+                            <div class="segment-benefit"><span class="check">&#10003;</span> Automatic 70/30 revenue share</div>
+                            <div class="segment-benefit"><span class="check">&#10003;</span> No monthly reconciliation needed</div>
+                            <div class="segment-benefit"><span class="check">&#10003;</span> Eliminates trust issues and payment delays</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Housing Society -->
+                <div class="segment-card animate-in">
+                    <div class="segment-header">
+                        <div class="segment-icon">&#127968;</div>
+                        <div class="segment-header-text">
+                            <h4>Housing Society / Maintenance</h4>
+                            <p>Monthly maintenance split across society fund, sinking fund, parking, and water charges</p>
+                            <span class="segment-split-type">Multi-Split</span>
+                        </div>
+                    </div>
+                    <div class="segment-body">
+                        <div class="segment-scenario">
+                            <div class="segment-scenario-title">Scenario</div>
+                            <p>Resident pays <strong>Rs 5,500</strong> as monthly maintenance. PG fee @ 1.5% = Rs 82.50. Net = Rs 5,417.50.</p>
+                        </div>
+                        <table class="segment-split-table">
+                            <thead>
+                                <tr>
+                                    <th>Beneficiary</th>
+                                    <th>Intended</th>
+                                    <th>Prorated</th>
+                                    <th>Account</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Society Maintenance</td>
+                                    <td class="amount-cell">Rs 3,500</td>
+                                    <td class="amount-cell">Rs 3,447</td>
+                                    <td><span class="account-tag static">Static</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Sinking Fund</td>
+                                    <td class="amount-cell">Rs 1,000</td>
+                                    <td class="amount-cell">Rs 985</td>
+                                    <td><span class="account-tag static">Static</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Parking Charges</td>
+                                    <td class="amount-cell">Rs 500</td>
+                                    <td class="amount-cell">Rs 493</td>
+                                    <td><span class="account-tag static">Static</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Water Charges</td>
+                                    <td class="amount-cell">Rs 500</td>
+                                    <td class="amount-cell">Rs 493</td>
+                                    <td><span class="account-tag static">Static</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="segment-benefits">
+                            <div class="segment-benefit"><span class="check">&#10003;</span> Each fund head receives designated share</div>
+                            <div class="segment-benefit"><span class="check">&#10003;</span> No manual allocation by treasurer</div>
+                            <div class="segment-benefit"><span class="check">&#10003;</span> Clean audit trail for AGM reporting</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SETTLEMENT FLOW -->
+    <section id="flow">
+        <div class="container">
+            <div class="section-label">Settlement Flow</div>
+            <h2 class="section-title">End-to-End Payment Journey</h2>
+            <p class="section-desc">
+                From customer payment to each party receiving their share — fully automated.
+            </p>
+
+            <div class="flow-visual">
+                <div class="flow-step">
+                    <div class="flow-step-connector">
+                        <div class="flow-step-dot">&#128176;</div>
+                        <div class="flow-step-line"></div>
+                    </div>
+                    <div class="flow-step-content">
+                        <h5>Customer Pays Rs 10,000</h5>
+                        <p>Via UPI, Net Banking, Cards, or Wallets</p>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-step-connector">
+                        <div class="flow-step-dot">&#9989;</div>
+                        <div class="flow-step-line"></div>
+                    </div>
+                    <div class="flow-step-content">
+                        <h5>Payment Confirmed by Gateway</h5>
+                        <p>Transaction verified and authorized</p>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-step-connector">
+                        <div class="flow-step-dot">&#9881;</div>
+                        <div class="flow-step-line"></div>
+                    </div>
+                    <div class="flow-step-content">
+                        <h5>Settlement Engine Calculates Net</h5>
+                        <p>Deducts PG fees, commission, GST, reserves &rarr; Net: Rs 9,750</p>
+                    </div>
+                </div>
+
+                <div class="flow-step highlight">
+                    <div class="flow-step-connector">
+                        <div class="flow-step-dot">&#9986;</div>
+                        <div class="flow-step-line"></div>
+                    </div>
+                    <div class="flow-step-content">
+                        <h5>Split Rules Applied Automatically</h5>
+                        <p>Configured split logic distributes net amount across beneficiaries</p>
+                    </div>
+                </div>
+
+                <div class="flow-split-branches">
+                    <div class="flow-branch">
+                        <div class="name">College A/c</div>
+                        <div class="amount">Rs 7,800</div>
+                    </div>
+                    <div class="flow-branch">
+                        <div class="name">University A/c</div>
+                        <div class="amount">Rs 1,500</div>
+                    </div>
+                    <div class="flow-branch">
+                        <div class="name">Platform A/c</div>
+                        <div class="amount">Rs 450</div>
+                    </div>
+                </div>
+
+                <div style="height: 16px"></div>
+
+                <div class="flow-step">
+                    <div class="flow-step-connector">
+                        <div class="flow-step-dot">&#128196;</div>
+                        <div class="flow-step-line"></div>
+                    </div>
+                    <div class="flow-step-content">
+                        <h5>NEFT Files Generated & Sent to Bank</h5>
+                        <p>Separate transfer instructions for each beneficiary</p>
+                    </div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="flow-step-connector">
+                        <div class="flow-step-dot">&#10004;</div>
+                    </div>
+                    <div class="flow-step-content">
+                        <h5>Each Party Receives Their Share</h5>
+                        <p>Tracked: Queued &rarr; Sent &rarr; Confirmed. Failed transfers flagged.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REPORTING -->
+    <section id="reporting">
+        <div class="container">
+            <div class="section-label">Reporting & Dashboard</div>
+            <h2 class="section-title">Full Visibility at Every Level</h2>
+            <p class="section-desc">
+                Real-time dashboards for merchants and operations teams with complete split settlement tracking.
+            </p>
+
+            <div class="reporting-grid">
+                <div class="reporting-card animate-in">
+                    <h4>&#128202; Merchant Reports</h4>
+                    <ul class="reporting-list">
+                        <li>
+                            <div class="report-icon">&#128200;</div>
+                            <div><strong>Settlement Summary</strong> &mdash; Total collected, total split, per-beneficiary breakdown</div>
+                        </li>
+                        <li>
+                            <div class="report-icon">&#128196;</div>
+                            <div><strong>Transaction Detail</strong> &mdash; Each payment with its split allocation</div>
+                        </li>
+                        <li>
+                            <div class="report-icon">&#128101;</div>
+                            <div><strong>Beneficiary Report</strong> &mdash; Per-beneficiary totals, transaction count, bank details</div>
+                        </li>
+                        <li>
+                            <div class="report-icon">&#128230;</div>
+                            <div><strong>Transfer Status</strong> &mdash; NEFT tracking: Pending, Sent, Confirmed, Failed</div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="reporting-card animate-in">
+                    <h4>&#9881; Operations Dashboard</h4>
+                    <ul class="reporting-list">
+                        <li>
+                            <div class="report-icon">&#9881;</div>
+                            <div><strong>Split Config Manager</strong> &mdash; View and manage all merchant split rules</div>
+                        </li>
+                        <li>
+                            <div class="report-icon">&#128260;</div>
+                            <div><strong>Settlement Monitor</strong> &mdash; Real-time view of all splits being processed</div>
+                        </li>
+                        <li>
+                            <div class="report-icon">&#9888;</div>
+                            <div><strong>Failed Transfer Queue</strong> &mdash; Flagged transfers requiring investigation</div>
+                        </li>
+                        <li>
+                            <div class="report-icon">&#128269;</div>
+                            <div><strong>Audit Trail</strong> &mdash; Complete history of every split decision and transfer</div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SETUP -->
+    <section id="setup">
+        <div class="container">
+            <div class="section-label">Setup & Onboarding</div>
+            <h2 class="section-title">Get Started in Four Steps</h2>
+            <p class="section-desc">
+                No integration changes needed. The ops team handles the configuration — merchants just provide the requirements.
+            </p>
+
+            <div class="setup-content">
+                <div class="setup-requirements">
+                    <div class="setup-req animate-in">
+                        <div class="setup-req-num">1</div>
+                        <div>
+                            <h5>Split Pattern</h5>
+                            <p>Which of the 5 split types applies to your business</p>
+                        </div>
+                    </div>
+                    <div class="setup-req animate-in">
+                        <div class="setup-req-num">2</div>
+                        <div>
+                            <h5>Beneficiary Details</h5>
+                            <p>Name, type, bank account, IFSC code (for static accounts), and UDF mapping (for dynamic)</p>
+                        </div>
+                    </div>
+                    <div class="setup-req animate-in">
+                        <div class="setup-req-num">3</div>
+                        <div>
+                            <h5>Amount Rules</h5>
+                            <p>Fixed amount, percentage of total, from transaction data, or remainder</p>
+                        </div>
+                    </div>
+                    <div class="setup-req animate-in">
+                        <div class="setup-req-num">4</div>
+                        <div>
+                            <h5>Fee Handling Preference</h5>
+                            <p>Prorate fees across all parties OR deduct from one party</p>
+                        </div>
+                    </div>
+                    <div class="setup-req animate-in">
+                        <div class="setup-req-num">5</div>
+                        <div>
+                            <h5>Primary Beneficiary</h5>
+                            <p>Who receives the remainder after all other splits are calculated</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="setup-timeline animate-in">
+                    <h4>Onboarding Timeline</h4>
+                    <div class="timeline-steps">
+                        <div class="timeline-step active">
+                            <div class="timeline-dot-col">
+                                <div class="timeline-dot">1</div>
+                                <div class="timeline-line"></div>
+                            </div>
+                            <div class="timeline-text">
+                                <h5>Submit Requirements</h5>
+                                <p>Merchant shares split details and beneficiary info</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step">
+                            <div class="timeline-dot-col">
+                                <div class="timeline-dot">2</div>
+                                <div class="timeline-line"></div>
+                            </div>
+                            <div class="timeline-text">
+                                <h5>Configure Rules</h5>
+                                <p>Ops team sets up split rules on the dashboard</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step">
+                            <div class="timeline-dot-col">
+                                <div class="timeline-dot">3</div>
+                                <div class="timeline-line"></div>
+                            </div>
+                            <div class="timeline-text">
+                                <h5>Test Transaction</h5>
+                                <p>Verify split logic with a test payment</p>
+                            </div>
+                        </div>
+                        <div class="timeline-step active">
+                            <div class="timeline-dot-col">
+                                <div class="timeline-dot">4</div>
+                            </div>
+                            <div class="timeline-text">
+                                <h5>Go Live</h5>
+                                <p>Splits apply to all future settlements</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setup-note">
+                        <strong>No integration changes needed</strong> if the merchant is already passing the required data in UDF fields during payment.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+        <div class="container">
+            <div class="section-label">FAQ</div>
+            <h2 class="section-title">Frequently Asked Questions</h2>
+            <p class="section-desc">
+                Everything you need to know about Split Settlement.
+            </p>
+
+            <div class="faq-list">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">Does the customer see the split?</div>
+                    <div class="faq-answer"><p>No. The customer pays a single amount. Splitting happens entirely on the backend during settlement. The customer receives a single receipt for the full payment.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">Can split rules be changed after setup?</div>
+                    <div class="faq-answer"><p>Yes. Split configurations can be updated anytime by the ops team. Changes apply to future settlements — existing settlements are not affected.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">What happens if a split transfer fails?</div>
+                    <div class="faq-answer"><p>The failed transfer is flagged in the system. The ops team can investigate the failure reason and retry or resolve the issue through the dashboard.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">Can a merchant have different splits for different transactions?</div>
+                    <div class="faq-answer"><p>Yes. With Dynamic Account or Institute-Based patterns, each transaction can specify different recipients and amounts via UDF fields.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">Are there limits on the number of beneficiaries?</div>
+                    <div class="faq-answer"><p>No hard limit. Multiple beneficiaries can be configured with priority ordering. Each can have independent amount rules and account configurations.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">Does the merchant need to change their payment integration?</div>
+                    <div class="faq-answer"><p>No, as long as the merchant is already sending the required data in their UDF (User Defined Fields) during payment. No new integration work is needed.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">How are PG fees handled in a split?</div>
+                    <div class="faq-answer"><p>Two options: (1) Prorate fees proportionally across all beneficiaries, or (2) Deduct entirely from the primary beneficiary. This is configurable per merchant.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">What payment methods are supported?</div>
+                    <div class="faq-answer"><p>All methods supported by the payment gateway — UPI, Net Banking, Credit/Debit Cards, Wallets. The split logic is payment-method agnostic.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <img src="assets/logos/primary-horizontal-white.svg" alt="SabPaisa" style="height: 36px; margin-bottom: 8px;">
+        <div class="footer-line"></div>
+        <p>Split Settlement &mdash; Automating payment distribution so merchants can focus on their business.</p>
+        <p style="margin-top: 8px; opacity: 0.4; font-size: 12px;">SettlePaisa is a product of SabPaisa (Crossword Cybersecurity Pvt. Ltd.)</p>
+    </footer>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 10);
+        });
+
+        // FAQ toggle
+        function toggleFaq(el) {
+            const item = el.parentElement;
+            const wasOpen = item.classList.contains('open');
+            // Close all
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+            // Toggle clicked
+            if (!wasOpen) item.classList.add('open');
+        }
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-in').forEach(el => observer.observe(el));
+
+        // Active nav link
+        const sections = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const top = section.offsetTop - 100;
+                if (window.scrollY >= top) current = section.getAttribute('id');
+            });
+            document.querySelectorAll('.nav-links a').forEach(a => {
+                a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+            });
+        });
+    </script>
+</body>
+</html>
